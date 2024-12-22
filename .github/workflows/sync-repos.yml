@@ -16,7 +16,7 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name 'Lithara'
+          git config --global user.name 'Lithara Perera'
           git config --global user.email 'litharaperera2002@gmail.com'
 
       - name: Push to target repository
