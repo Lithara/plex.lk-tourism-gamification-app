@@ -1,0 +1,41 @@
+name: Sync to Private Repo
+
+on:
+  push:
+    branches:
+      - main  # Change this if you use a different default branch
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'Lithara'
+          git config --global user.email 'litharaperera2002@gmail.com'
+
+      - name: Push to target repository
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          # Replace these with your repository details
+          SOURCE_REPO="https://github.com/Lithara/plex.lk-dev.git"
+          TARGET_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk.git"
+          
+          # Get the latest commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          
+          # Clone the target repository
+          git clone --bare $SOURCE_REPO
+          cd first-repo.git
+          
+          # Push to target repository
+          git push --mirror $TARGET_REPO
+          
+          cd ..
+          rm -rf first-repo.git
