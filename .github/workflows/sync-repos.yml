@@ -3,7 +3,7 @@ name: Sync Commits to Second Repo
 on:
   push:
     branches:
-      - main # Trigger on push to the main branch (update if your default branch is different)
+      - main # Trigger on push to the main branch (update if your branch differs)
 
 jobs:
   sync-repo:
@@ -14,7 +14,7 @@ jobs:
     - name: Checkout source repository
       uses: actions/checkout@v3
 
-    # Step 2: Configure Git credentials for the second repository
+    # Step 2: Configure Git
     - name: Configure Git
       run: |
         git config --global user.name "Lithara"
@@ -22,9 +22,9 @@ jobs:
 
     # Step 3: Add second repository as a remote
     - name: Add second repository as remote
-      run: git remote add second-repo https://Lithara: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@github.com/Lithara/plex.lk.git
+      run: git remote add second-repo https://$GITHUB_ACTOR:${{ secrets.SECOND_REPO_PAT }}@github.com/<your-username>/<second-repo-name>.git
 
-    # Step 4: Push changes to the second repository
+    # Step 4: Push to the second repository
     - name: Push to second repository
       run: |
         git fetch second-repo
