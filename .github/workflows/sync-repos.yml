@@ -1,42 +1,31 @@
-name: Sync to Private Repo
+name: Sync Commits to Second Repo
 
 on:
   push:
     branches:
-      - main  # Change this if you use a different default branch
+      - main # Trigger on push to the main branch (update if your default branch is different)
 
 jobs:
-  sync:
+  sync-repo:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.PAT_TOKEN }}  # Add token for source repo authentication
+    # Step 1: Checkout the first repository
+    - name: Checkout source repository
+      uses: actions/checkout@v3
 
-      - name: Configure Git
-        run: |
-          git config --global user.name 'Lithara'
-          git config --global user.email 'litharaperera2002@gmail.com.com'
+    # Step 2: Configure Git credentials for the second repository
+    - name: Configure Git
+      run: |
+        git config --global user.name "Lithara"
+        git config --global user.email "litharaperera2002@gmail.com"
 
-      - name: Push to target repository
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          # Use authenticated URLs for both repositories
-          SOURCE_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk-dev.git"
-          TARGET_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk.git"
-          
-          # Get the latest commit message
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          
-          # Clone the target repository
-          git clone --bare "$SOURCE_REPO"
-          cd plex.lk-dev.git  # Changed to match your actual repo name
-          
-          # Push to target repository
-          git push --mirror "$TARGET_REPO"
-          
-          cd ..
-          rm -rf plex.lk-dev.git
+    # Step 3: Add second repository as a remote
+    - name: Add second repository as remote
+      run: git remote add second-repo https://Lithara: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@github.com/Lithara/plex.lk.git
+
+    # Step 4: Push changes to the second repository
+    - name: Push to second repository
+      run: |
+        git fetch second-repo
+        git push second-repo main
