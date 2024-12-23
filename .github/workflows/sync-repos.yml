@@ -22,7 +22,7 @@ jobs:
 
     # Step 3: Add second repository as a remote
     - name: Add second repository as remote
-      run: git remote add second-repo https://$GITHUB_ACTOR:${{ secrets.SECOND_REPO_PAT }}@github.com/<your-username>/<second-repo-name>.git
+      run: git remote add second-repo https://$GITHUB_ACTOR:${{ secrets.SECOND_REPO_PAT }}@github.com/Lithara/plex.lk.git
 
     # Step 4: Push to the second repository
     - name: Push to second repository
