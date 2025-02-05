@@ -36,6 +36,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 =======
-# plex.lk-dev
-## This website is to Gamify Tourism
->>>>>>> a1b8040c2066a0ce7af93eb9a7a08674b01b748d
+hellooo
