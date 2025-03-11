@@ -15,27 +15,37 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN }}  # Add token for source repo authentication
 
-      - name: Configure Git
+      - name: Configure Git for target repository
         run: |
-          git config --global user.name 'Lithara'
-          git config --global user.email 'litharaperera2002@gmail.com.com'
+          git config --global user.name 'Lithara'  # Replace with the repository owner's name
+          git config --global user.email 'litharaperera2002@gmail.com'  # Replace with the repository owner's email
+
       - name: Push to target repository
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}  # Use the repository owner's PAT
         run: |
           # Use authenticated URLs for both repositories
           SOURCE_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk-dev.git"
-          TARGET_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk.git"
+          TARGET_REPO="https://oauth2:${PAT_TOKEN}@github.com/Lithara/plex.lk-tourism-gamification-app.git"
           
           # Get the latest commit message
           COMMIT_MSG=$(git log -1 --pretty=%B)
           
-          # Clone the target repository
+          # Clone the source repository as a bare repository
           git clone --bare "$SOURCE_REPO"
           cd plex.lk-dev.git  # Changed to match your actual repo name
+          
+          # Rewrite commit author information
+          git filter-branch --env-filter '
+          export GIT_AUTHOR_NAME="Lithara"
+          export GIT_AUTHOR_EMAIL="litharaperera2002@gmail.com"
+          export GIT_COMMITTER_NAME="Lithara"
+          export GIT_COMMITTER_EMAIL="litharaperera2002@gmail.com"
+          ' --tag-name-filter cat -- --branches --tags
           
           # Push to target repository
           git push --mirror "$TARGET_REPO"
           
+          # Clean up
           cd ..
           rm -rf plex.lk-dev.git
