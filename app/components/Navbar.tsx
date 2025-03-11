@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowUpRight, CircleAlert, Menu, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 interface NavBarProps {
   variant?: "landing" | "app" | "visa";
@@ -17,7 +16,7 @@ interface NavBarProps {
 const Navbar = ({
   variant = "app",
   showVisa = true,
-  showSearch = false,
+  //showSearch = false,
   activeItem,
 }: NavBarProps) => {
   const [isVisible, setIsVisible] = useState(true);
@@ -89,7 +88,7 @@ const Navbar = ({
           {/* middle  */}
           <div>
             {variant !== "landing" && variant !== "visa" && (
-              <nav className="hidden md:flex  items-center gap-6 sm:text-xl md:text-2xl font-medium">
+              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/  sm:text-md md:text-xl font-normal">
                 <Link
                   href="/explore"
                   className={cn(
@@ -137,20 +136,22 @@ const Navbar = ({
           {/* right side */}
           <div className="flex items-center gap-2">
             {variant !== "landing" && variant !== "visa" && (
-              <div className="bg-yellow-50 p-2 h-6 w-auto flex items-center justify-center rounded-full text-amber-900">
+              <div className="bg-yellow-50 p-2   w-auto flex items-center justify-center rounded-full text-amber-900 text-xs">
                 <p className="flex items-center gap-1">
                   5 PLX <CircleAlert className="w-4 h-4"></CircleAlert>
                 </p>
               </div>
             )}
             {variant !== "landing" && (
-              <div className="p-2 border-2 border-gray-400 rounded-full flex gap-2 justify-between items-center">
+              <div className="p-1 border-2 border-gray-400 sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
                 <UserRound
-                  className="bg-gray-400 rounded-full w-auto h-8"
+                  className="bg-gray-400 rounded-full w-auto h-full"
                   color="white"></UserRound>
 
                 <div>
-                  <Menu className="w-auto h-8"> </Menu>
+                  <Menu className="w-auto h-full" color="black">
+                    {" "}
+                  </Menu>
                 </div>
               </div>
             )}
