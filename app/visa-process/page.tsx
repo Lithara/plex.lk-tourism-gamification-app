@@ -68,7 +68,7 @@ export default function VisaProcessing() {
         {/* Process Steps */}
         <section className="container mx-auto px-4 py-12 mb-24">
           <div className="relative">
-            <div className="absolute top-1/4 left-0 right-0 h-0.5 bg-black lg:block hidden" />
+            <div className="absolute top-1/4 left-0 right-0 h-0.5 bg-black lg:block hidden w-[85%] mx-auto " />
             <div className="relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {steps.map((step, index) => (
                 <div
