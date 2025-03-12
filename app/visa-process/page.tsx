@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,6 +36,11 @@ export default function VisaProcessing() {
                 <Link href="https://plex.lk">
                   <Button variant="ghost" size="lg" className="underline">
                     Visit Plex.lk Website
+                    <ArrowUpRightIcon
+                      size={20}
+                      color="white"
+                      className="bg-black"
+                    />
                   </Button>
                 </Link>
               </div>
