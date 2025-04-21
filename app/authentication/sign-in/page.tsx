@@ -23,7 +23,7 @@ export default function SignIn() {
           height={0}
           priority
         />
-        <p className="mt-2 text-md font-semibold text-red-500  text-center">
+        <p className="mt-2 text-md font-semibold text-primary-500  text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
           mi. ingilla,
         </p>
@@ -63,7 +63,7 @@ export default function SignIn() {
               </Button>
             </div>
           </div>
-          <Button className="w-full bg-red-500 hover:bg-red-600">
+          <Button className="w-full bg-primary-500 hover:bg-primary-600">
             Sign In
           </Button>
         </div>
@@ -100,7 +100,9 @@ export default function SignIn() {
         </Button>
         <div className="text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="sign-up" className="text-red-500 hover:text-red-600">
+          <Link
+            href="sign-up"
+            className="text-primary-500 hover:text-primary-600">
             Sign Up
           </Link>
         </div>

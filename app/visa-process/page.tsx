@@ -14,15 +14,15 @@ export default function VisaProcessing() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col md:mx-[120px]">
       <main className="flex-1">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-12 md:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                Visa <span className="text-red-500">Processing</span>
-                <br />& <span className="text-red-500">Verification</span>
+                Visa <span className="text-primary-500">Processing</span>
+                <br />& <span className="text-primary-500">Verification</span>
               </h1>
               <p className="text-lg text-muted-foreground max-w-[600px]">
                 A Visit visa is an entry permit signifying the consent of the
@@ -30,9 +30,11 @@ export default function VisaProcessing() {
                 the country.
               </p>
               <div className="flex gap-4">
-                <Button size="lg" className="bg-black hover:bg-black/90">
-                  Start Applying
-                </Button>
+                <Link href="/visa-process/apply">
+                  <Button size="lg" className="bg-black hover:bg-black/90">
+                    Start Applying
+                  </Button>
+                </Link>
                 <Link href="https://plex.lk">
                   <Button variant="ghost" size="lg" className="underline">
                     Visit Plex.lk Website

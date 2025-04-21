@@ -27,7 +27,7 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
                 priority
               />
             </div>
-            <p className="mt-2 text-lg font-semibold text-red-500 w-96 text-center">
+            <p className="mt-2 text-lg font-semibold text-primary-500 w-96 text-center">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
               massa mi. ingilla,
             </p>
