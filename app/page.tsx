@@ -13,9 +13,9 @@ export default function Home() {
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
               Explore,{" "}
-              <Flag className="inline-block w-8 h-8 text-red-500 -mt-2" />
+              <Flag className="inline-block w-8 h-8 text-primary-500 -mt-2" />
               <br />
-              Play <span className="text-red-500">&</span> Share.
+              Play <span className="text-primary-500">&</span> Share.
             </h1>
             <p className="text-lg text-muted-foreground max-w-[600px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et

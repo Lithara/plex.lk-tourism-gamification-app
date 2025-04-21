@@ -38,7 +38,7 @@ const Navbar = ({
     <header className="sticky top-0 z-25 w-full p-0 m-0 flex flex-col">
       {/* upper bar */}
       <nav
-        className={`sm:h-8 h-14 w-full bg-red-600 flex items-center mx-0 p-0 m-auto transition-transform duration-300 ${
+        className={`sm:h-8 h-14 w-full bg-primary-500 flex items-center mx-0 p-0 m-auto transition-transform duration-300 ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         }`}>
         <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px]  h-6 w-full flex sm:gap-4 items-center justify-center flex-col sm:flex-row text-xs sm:text-sm font-bold text-white">
@@ -46,8 +46,7 @@ const Navbar = ({
           <Link href="/visa" className="flex items-center gap-1">
             <p className="underline">Visit the website</p>
             <ArrowUpRight
-              className="w-3 h-3 bg-white "
-              color="red"
+              className="w-3 h-3 bg-white strprimary-500"
               strokeWidth={3}
             />
           </Link>
@@ -78,7 +77,7 @@ const Navbar = ({
               {showVisa && (
                 <Badge
                   variant="secondary"
-                  className=" bg-red-500 text-white mb-8 ">
+                  className=" bg-primary-500 text-white mb-8 ">
                   Visa
                 </Badge>
               )}

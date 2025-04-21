@@ -11,19 +11,19 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#14b8a6", // Teal base color
-          50: "#ecfdf5",
-          100: "#d1fae5",
-          200: "#a7f3d0",
-          300: "#6ee7b7",
-          400: "#34d399",
-          500: "#14b8a6",
-          600: "#0d9488",
-          700: "#0f766e",
-          800: "#115e59",
-          900: "#134e4a",
+          DEFAULT: "#3AAEA9",
+          50: "#e8f5f4",
+          100: "#c6e6e4",
+          200: "#a3d7d3",
+          300: "#80c8c3",
+          400: "#5db9b2",
+          500: "#3AAEA9",
+          600: "#2f8b87",
+          700: "#236865",
+          800: "#174644",
+          900: "#0c2322",
         },
-        // Retain other colors as needed
+
         neutral: {
           50: "#f9fafb",
           100: "#f3f4f6",
