@@ -36,11 +36,11 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className=" h-[400px] flex items-center justify-end">
+          <div className=" h-[450px] flex items-center justify-end">
             <Image
               src="/heroimage.png"
-              width={422}
-              height={0}
+              width={400}
+              height={300}
               alt="Hero"
               className="top-0 right-0 "
             />
