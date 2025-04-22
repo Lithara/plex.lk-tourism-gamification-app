@@ -115,8 +115,8 @@ export default function VisaApplication() {
       <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
         <DialogContent className="sm:max-w-md">
           <div className="flex flex-col items-center justify-center py-6">
-            <div className="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
-              <div className="h-16 w-16 rounded-full border-2 border-green-500 flex items-center justify-center text-green-500">
+            <div className="h-20 w-20 rounded-full bg-primary-100 flex items-center justify-center mb-4">
+              <div className="h-16 w-16 rounded-full border-2 border-primary-500 flex items-center justify-center text-primary-500">
                 <Check className="h-8 w-8" />
               </div>
             </div>

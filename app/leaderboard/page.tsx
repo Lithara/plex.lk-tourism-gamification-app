@@ -314,12 +314,12 @@ export default function LeaderboardPage() {
             <div
               key={user.rank}
               className={`border-b border-gray-100 ${
-                user.highlighted ? "bg-green-50" : ""
+                user.highlighted ? "bg-primary-50" : ""
               }`}>
               <div className="flex items-center py-4 px-4">
                 <div className="w-16 text-center">
                   <div className="text-lg font-bold">{user.rank}</div>
-                  <div className="text-xs text-green-500">+{user.change}</div>
+                  <div className="text-xs text-primary-500">+{user.change}</div>
                 </div>
 
                 <div className="flex items-center gap-3 w-48">
