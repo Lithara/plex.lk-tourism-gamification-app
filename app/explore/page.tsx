@@ -19,13 +19,6 @@ export default function ExplorePage() {
     "Rainforests",
     "Villages",
     "Museums",
-    "Tea Estates",
-    "Urban Parks",
-    "Gardens",
-    "Temples",
-    "Mosques",
-    "Churches",
-    "Caves",
   ];
 
   return (
@@ -41,9 +34,9 @@ export default function ExplorePage() {
             />
             <Button
               size="sm"
-              className="absolute right-1 top-1/2 -translate-y-1/2 rounded-full bg-primary-500 hover:bg-primary-600">
+              className="absolute text-white right-1 top-1/2 -translate-y-1/2 rounded-full bg-primary-500 hover:bg-primary-600">
               <Search className="h-4 w-4" />
-              <span className="sr-only">Search</span>
+              <span className="">Search</span>
             </Button>
           </div>
         </div>

@@ -15,7 +15,7 @@ interface NavBarProps {
 
 const Navbar = ({
   variant = "app",
-  showVisa = true,
+  showVisa = false,
   //showSearch = false,
   activeItem,
 }: NavBarProps) => {
@@ -69,8 +69,8 @@ const Navbar = ({
                 <Image
                   src="/logo.png"
                   alt="plexlk logo"
-                  width={150}
-                  height={100}
+                  width={132}
+                  height={26.94}
                   layout="responsive"
                 />
               </div>
@@ -87,7 +87,7 @@ const Navbar = ({
           {/* middle  */}
           <div>
             {variant !== "landing" && variant !== "visa" && (
-              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/  sm:text-md md:text-xl font-normal">
+              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
                 <Link
                   href="/explore"
                   className={cn(
@@ -142,13 +142,13 @@ const Navbar = ({
               </div>
             )}
             {variant !== "landing" && (
-              <div className="p-1 border-2 border-gray-400 sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
+              <div className="p-1 border-2  border-gray-400 sm:border-none sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
                 <UserRound
                   className="bg-gray-400 rounded-full w-auto h-full"
                   color="white"></UserRound>
 
                 <div>
-                  <Menu className="w-auto h-full" color="black">
+                  <Menu className="w-auto h-full sm:hidden" color="black">
                     {" "}
                   </Menu>
                 </div>

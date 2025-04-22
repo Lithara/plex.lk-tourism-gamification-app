@@ -51,12 +51,12 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
           {location.popular && (
-            <Badge className="bg-orange-500 hover:bg-orange-600">
+            <Badge className="bg-orange-500 hover:bg-orange-600 rounded-full">
               Most Popular
             </Badge>
           )}
           {location.knowledge && (
-            <Badge className="bg-gray-800 hover:bg-gray-900">
+            <Badge className="bg-black text-white rounded-full">
               Book of Knowledge
             </Badge>
           )}
@@ -150,7 +150,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             {location.knowledge && (
               <Button
                 variant="outline"
-                className="flex items-center gap-2"
+                className="flex bg-black text-white items-center gap-2 rounded-full"
                 onClick={() => setIsKnowledgeModalOpen(true)}>
                 Read the book of knowledge
                 <svg
@@ -219,7 +219,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
               </p>
             </div>
 
-            <Button className="w-full bg-primary-500 hover:bg-primary-600 text-white">
+            <Button className="w-full rounded-full bg-primary-500 hover:bg-primary-600 text-white">
               Place my flag
             </Button>
           </div>
@@ -287,9 +287,9 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             </div>
           </div>
           <Button
-            variant="outline"
+            variant="default"
             size="sm"
-            className="text-primary-500 border-primary-500 hover:bg-primary-50">
+            className="text-white rounded-full border-primary-500  hover:bg-primary-50">
             Follow
           </Button>
         </div>
