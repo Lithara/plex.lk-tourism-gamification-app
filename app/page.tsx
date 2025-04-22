@@ -8,7 +8,11 @@ export default function Home() {
   return (
     <main className="min-h-screen  mx-[16px] sm:mx-[64px] md:mx-[120px] ">
       {/* Hero Section */}
-      <section className="container px-4 pt-8 md:pt-12 lg:pt-16 ">
+      <section
+        className="overflow-hidden  container px-4 pt-8 md:pt-12 lg:pt-16
+       ">
+        <div className=" absolute bottom-[-10%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
+        <div className="absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
@@ -23,7 +27,9 @@ export default function Home() {
             </p>
             <div className="flex gap-4">
               <Link href="/authentication/sign-up">
-                <Button size="lg">Get Started</Button>
+                <Button className="bg-black text-white rounded-full" size="lg">
+                  Start Exploring
+                </Button>
               </Link>
               <Button size="lg" variant="ghost">
                 <p className="underline">View more details</p>
@@ -32,7 +38,7 @@ export default function Home() {
           </div>
           <div className=" h-[400px] flex items-center justify-end">
             <Image
-              src="/heroimage.jpg"
+              src="/heroimage.png"
               width={422}
               height={0}
               alt="Hero"
