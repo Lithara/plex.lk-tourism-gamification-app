@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-import { Flag } from "lucide-react";
+import { ChevronRight, Flag } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -40,10 +40,42 @@ export default function Home() {
             <Image
               src="/heroimage.png"
               width={400}
-              height={300}
+              height={350}
               alt="Hero"
               className="top-0 right-0 "
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Promoting Local Business */}
+      <section className="max-w-[1400px] mx-auto px-4 py-16 md:py-24 relative">
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          <div className=" absolute bottom-[10%] left-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
+          <div>
+            <Image
+              src="/comingsoonimage.png"
+              alt="Local businesses in Hikkaduwa"
+              width={500}
+              height={350}
+            />
+          </div>
+          <div className="space-y-4">
+            <Button size={"sm"} className="text-white bg-black rounded-full ">
+              Coming Soon
+            </Button>
+            <h2 className="text-[60px]  leading-none font-bold">
+              Promoting the local businesses.
+            </h2>
+            <p className="text-muted-foreground">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
+              massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
+              fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
+              vitae mattis tellus.
+            </p>
+            <Button variant="link" className="p-0 text-teal-500">
+              Learn more <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
           </div>
         </div>
       </section>
