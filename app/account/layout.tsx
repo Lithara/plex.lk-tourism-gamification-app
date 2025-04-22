@@ -32,10 +32,7 @@ export default function AccountLayout({
             className="mx-2">
             <polyline points="9 18 15 12 9 6" />
           </svg>
-          <span className="font-medium">
-            {/* This would be dynamically set based on the current page */}
-            Login & Security
-          </span>
+          <span className="font-medium">Login & Security</span>
         </div>
 
         {children}
