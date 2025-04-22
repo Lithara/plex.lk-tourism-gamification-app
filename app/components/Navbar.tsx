@@ -35,7 +35,7 @@ const Navbar = ({
   }, []);
 
   return (
-    <header className="sticky top-0 z-25 w-full p-0 m-0 flex flex-col">
+    <header className="static top-0 z-1000 w-full p-0 m-0 flex flex-col ">
       {/* upper bar */}
       <nav
         className={`sm:h-8 h-14 w-full bg-primary-500 flex items-center mx-0 p-0 m-auto transition-transform duration-300 ${
