@@ -43,10 +43,10 @@ const Navbar = ({
         }`}>
         <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px]  h-6 w-full flex sm:gap-4 items-center justify-center flex-col sm:flex-row text-xs sm:text-sm font-bold text-white">
           <p>Visa processing approval system now changed! </p>
-          <Link href="/visa" className="flex items-center gap-1">
+          <Link href="/visa-process" className="flex items-center gap-1">
             <p className="underline">Visit the website</p>
             <ArrowUpRight
-              className="w-3 h-3 bg-white strprimary-500"
+              className="w-3 h-3 bg-white stroke-primary-500"
               strokeWidth={3}
             />
           </Link>
