@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="min-h-screen static mx-[16px] sm:mx-[64px] md:mx-[120px] ">
       {/* Hero Section */}
-      <section className="overflow-hidden  container px-4 pt-8 md:pt-12 lg:pt-16">
+      <section className="overflow-hidden  mx-auto  container px-4 pt-8 md:pt-12 lg:pt-16">
         <div className=" absolute bottom-[-10%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
         <div className="absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
@@ -67,14 +67,14 @@ export default function Home() {
             <h2 className="text-[60px]  leading-none font-bold">
               Promoting the local businesses.
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-[18px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
               massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
               fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
               vitae mattis tellus.
             </p>
-            <Button variant="link" className="p-0 text-teal-500">
-              Learn more <ChevronRight className="ml-1 h-4 w-4" />
+            <Button variant="link" className="p-0 text-black underline">
+              Learn more
             </Button>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function Home() {
       {/* How it Works */}
       <section className="max-w-[1400px] relative mx-auto px-4 py-16 text-center">
         <div className="absolute inset-0 -z-10 h-full w-full bg-transparent  bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
-        <div className=" absolute bottom-[40%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
+        <div className=" absolute bottom-[25%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
         <div className="flex justify-center mb-4">
           <Image src="/favicon.png" width={41} height={59} alt="Plex.lk logo" />
         </div>
@@ -93,23 +93,22 @@ export default function Home() {
         <div className="grid gap-24">
           <div className="grid md:grid-cols-2 gap-8 items-center text-left">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">
-                <span className="text-teal-500">Explore</span> & Learn about our
-                history.
+              <h3 className="text-[48px] font-bold">
+                <span className="text-primary-500">Explore</span> & Learn about
+                our history.
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-[18px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi.
+                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
+                sapien fringilla, mattis ligula consectetur, ultrices mauris.
+                Maecenas vitae mattis tellus.
               </p>
-              <Button variant="outline" size="sm" className="rounded-full">
-                Learn more
-              </Button>
             </div>
-            <div className="relative">
+            <div className="flex  justify-end">
               <Image
-                src="/adams-peak.png"
-                width={400}
-                height={250}
+                src="/adamspeak.png"
+                width={588}
+                height={440.57}
                 alt="Adam's Peak"
                 className="object-contain"
               />
@@ -118,20 +117,22 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8 items-center text-left">
             <div className="space-y-4 md:order-2">
-              <h3 className="text-2xl font-bold">
-                <span className="text-teal-500">Play,</span> Earn & Redeem Plex
-                points.
+              <h3 className="text-[48px] font-bold">
+                <span className="text-primary-500">Play,</span> Earn & Redeem
+                Plex points.
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-[18px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi.
+                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
+                sapien fringilla, mattis ligula consectetur, ultrices mauris.
+                Maecenas vitae mattis tellus.
               </p>
             </div>
-            <div className="md:order-1 relative">
+            <div className="flex  justify-start">
               <Image
-                src="/redeem-points.png"
-                width={400}
-                height={250}
+                src="/play&earn.png"
+                width={510}
+                height={383.51}
                 alt="Redeem Plex points"
                 className="object-contain"
               />
@@ -140,24 +141,102 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-8 items-center text-left">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">
-                <span className="text-teal-500">Share</span> & Save your
+              <h3 className="text-[48px] font-bold ">
+                <span className="text-primary-500">Share</span> & Save your
                 valuable memories.
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-[18px]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi.
+                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
+                sapien fringilla, mattis ligula consectetur, ultrices mauris.
+                Maecenas vitae mattis tellus.
               </p>
             </div>
-            <div className="relative">
+            <div className="flex  justify-end">
               <Image
-                src="/share-journey.png"
-                width={400}
-                height={300}
+                src="/shareujourney.png"
+                width={486}
+                height={441.09}
                 alt="Share your journey"
                 className="object-contain"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Highlights */}
+      <section className="max-w-[1400px] mx-auto px-4 py-16">
+        <h2 className="text-[60px] font-bold text-center mb-16">
+          Highlights of our <br /> platform
+          <span className="text-primary-500">.</span>
+        </h2>
+        <div className="grid md:grid-cols-2 gap-16">
+          {/* Top Travelers */}
+          <div className="w-full">
+            <Image src={"/leaderboard.png"} width={690} height={300} alt="" />
+          </div>
+
+          {/* Most Visited Place */}
+          <div className="w-full rounded-md shadow-md p-0">
+            <h3
+              className="text-xl font-semibold mb-6 text-[30px] 
+">
+              Most visited place <br /> according to <br /> Plex
+              <span className="text-primary-500">.lk</span>
+            </h3>
+            <div className="mt-4">
+              <p className="text-[30px] text-muted-foreground">
+                In 2023, The most visited place in Sri Lanka is Adams Peak
+              </p>
+              <p className="text-sm text-primary-500">
+                <span className="font-bold">30,000</span> Foreigners have
+                visited.
+                <br />
+                More than <span className="font-bold">100k PLEXES</span>{" "}
+                redeemed.
+              </p>
+            </div>
+
+            <div className="relative">
+              <Image
+                src="/adamspeak1.png"
+                width={500}
+                height={300}
+                alt="Adam's Peak - Most visited place"
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* CTA Section */}
+      <section className="max-w-[1400px] relative bg-transparent mx-auto px-4 py-16 mb-16 bg-gradient-to-br from-white via-white to-primary-50/50 rounded-xl">
+        <div className=" absolute bottom-[-10%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="relative">
+            <Image
+              src="/adventure.png"
+              width={500}
+              height={300}
+              alt="Adventure"
+              className="object-contain rounded-lg"
+            />
+          </div>
+          <div className="space-y-4">
+            <h2 className="text-[48px] font-bold">
+              <span className="text-primary-500">Ready</span> to start your
+              adventure<span className="text-primary-500">?</span>
+            </h2>
+            <p className="text-[18px]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
+              massa mi. Aliquam in hendrerit urna.
+            </p>
+            <Button
+              size="lg"
+              className="bg-black hover:bg-black/90 text-white  rounded-full ">
+              Let's go
+            </Button>
           </div>
         </div>
       </section>

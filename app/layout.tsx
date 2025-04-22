@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex flex-col items-center justify-center min-h-screen`}>
         <Navbar />
-        <div className="w-full min-h-screen">{children}</div>
+        <div className="w-full min-h-screen overflow-hidden">{children}</div>
         <Footer />
       </body>
     </html>
