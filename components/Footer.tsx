@@ -4,17 +4,19 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 flex flex-col place-content-center w-full">
-      <div className="container w-full  py-8 flex justify-arrow  text-right mx-[16px] sm:mx-[64px] md:mx-[120px] ">
-        <div className="grid grid-cols-1 md:grid-cols-5">
+    <footer className="bg-gray-100 flex flex-col items-center justify-center w-full">
+      <div className="container w-full  mx-[16px] sm:mx-[64px] md:mx-[120px] ">
+        <div className="grid w-full grid-cols-1 md:grid-cols-5 py-6 ">
           {/* Logo Section */}
-          <div className="col-span-1 md:row-span-1">
-            <Link href="/" className="inline-flex items-center">
+          <div className="col-span-1 sm:place-content-start md:row-span-1">
+            <Link
+              href="/"
+              className="inline-flex w-[180px] h-auto items-center">
               <Image
                 src="/logo.png"
                 alt="Plex.lk Logo"
-                width={120}
-                height={40}
+                width={180}
+                height={0}
                 className="h-auto"
                 priority
               />
@@ -22,16 +24,17 @@ export default function Footer() {
           </div>
 
           {/* Visa Process System */}
-          <div className="col-span-1 ">
+          <div className="col-span-1 flex justify-end items-start">
             <div className="flex items-center space-x-1">
-              <h3 className="text-sm font-medium">Visa Process System</h3>
+              <h3 className="text-[14px] font-medium">Visa Process System</h3>
+              <ArrowUpRight className="h-4 w-4 bg-black text-white rounded-sm" />
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="col-span-1 ">
-            <h3 className="mb-2 text-sm font-medium">Navigation</h3>
-            <ul className="space-y-1 text-sm text-muted-foreground">
+          <div className="col-span-1 flex flex-col justify-start items-end text-right">
+            <h3 className="mb-2 text-[14px] font-medium">Navigation</h3>
+            <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
                 <Link
                   href="/explore"
@@ -57,9 +60,9 @@ export default function Footer() {
           </div>
 
           {/* Developers */}
-          <div className="col-span-1 ">
-            <h3 className="mb-2 text-sm font-medium">Developers</h3>
-            <ul className="space-y-1 text-sm text-muted-foreground">
+          <div className="col-span-1  flex flex-col justify-start items-end text-right">
+            <h3 className="mb-2 text-[14px] font-medium">Developers</h3>
+            <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
                 <Link
                   href="/contributors"
@@ -85,9 +88,9 @@ export default function Footer() {
           </div>
 
           {/* Learn More About */}
-          <div className="col-span-1 ">
-            <h3 className="mb-2 text-sm font-medium">Learn More About</h3>
-            <ul className="space-y-1 text-sm text-muted-foreground">
+          <div className="col-span-1  flex flex-col justify-start items-end text-right">
+            <h3 className="mb-2 text-[14px] font-medium">Learn More About</h3>
+            <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
                 <Link
                   href="/plex-points"
