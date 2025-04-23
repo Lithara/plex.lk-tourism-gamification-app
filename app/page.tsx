@@ -170,16 +170,28 @@ export default function Home() {
           Highlights of our <br /> platform
           <span className="text-primary-500">.</span>
         </h2>
-        <div className="grid md:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 place-items-center md:grid-cols-7 h-auto gap-2">
           {/* Top Travelers */}
-          <div className="w-full">
-            <Image src={"/leaderboard.png"} width={690} height={632} alt="" />
+          <div className=" sm:relative col-span-1 sm:col-span-4 h-full w-full">
+            <Image
+              src={"/leaderboard.png"}
+              sizes="100vw"
+              width={600}
+              height={400}
+              alt=""
+              className="object-contain"
+            />
           </div>
 
           {/* Most Visited Place */}
-          <div className="w-full relative rounded-lg h-[632px] shadow-md shadow-gray-400 p-0">
-            <div className="absolute top-[10%] right-[10%]">
-              <Image src={"/partypopper.png"} width={50} height={50} alt="" />
+          <div className="h-full sm:col-span-3  relative rounded-lg  shadow-md shadow-gray-400 p-0">
+            <div className="absolute top-[10%] h-[50px] w-[50px] right-[10%]">
+              <Image
+                src={"/partypopper.png"}
+                fill
+                alt=""
+                className="object-cover"
+              />
             </div>
 
             <h3
