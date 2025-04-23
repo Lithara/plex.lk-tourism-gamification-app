@@ -10,15 +10,15 @@ export default function Home() {
       {/* Hero Section */}
       <section className="overflow-hidden  mx-auto  container px-4 pt-8 md:pt-12 lg:pt-16">
         <div className=" absolute bottom-[-10%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
-        <div className="absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
+        <div className="hidden sm:block absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-[96px] leading-[0.5] font-bold tracking-tight">
-              <span className="flex items-center gap-2 text-[128px]">
+            <h1 className="text-[64px] md:text-[128px] sm:text-6xl  sm:leading-[0.5] leading-[1] font-bold tracking-tight">
+              <span className="flex items-center gap-2 ">
                 Explore<span className="text-primary-500">,</span>{" "}
                 <Image src="/flag.png" alt="Logo" width={49} height={74} />
               </span>
-              <br />
+              <br className="hidden sm:block" />
               Play <span className="text-primary-500">&</span> Share.
             </h1>
             <p className="text-lg text-muted-foreground max-w-[600px] pt-3">
@@ -36,7 +36,7 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          <div className=" h-[450px] flex items-center justify-end">
+          <div className=" h-[450px] flex items-center sm:justify-end">
             <Image
               src="/heroimage.png"
               width={400}
@@ -174,22 +174,26 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-16">
           {/* Top Travelers */}
           <div className="w-full">
-            <Image src={"/leaderboard.png"} width={690} height={300} alt="" />
+            <Image src={"/leaderboard.png"} width={690} height={632} alt="" />
           </div>
 
           {/* Most Visited Place */}
-          <div className="w-full rounded-md shadow-md p-0">
+          <div className="w-full relative rounded-lg h-[632px] shadow-md shadow-gray-400 p-0">
+            <div className="absolute top-[10%] right-[10%]">
+              <Image src={"/partypopper.png"} width={50} height={50} alt="" />
+            </div>
+
             <h3
-              className="text-xl font-semibold mb-6 text-[30px] 
+              className="text-xl font-bold px-6 pt-6 mb-6 text-[30px] 
 ">
               Most visited place <br /> according to <br /> Plex
               <span className="text-primary-500">.lk</span>
             </h3>
-            <div className="mt-4">
-              <p className="text-[30px] text-muted-foreground">
+            <div className="px-6 pt-6">
+              <p className="text-[20px] font-bold text-muted-foreground">
                 In 2023, The most visited place in Sri Lanka is Adams Peak
               </p>
-              <p className="text-sm text-primary-500">
+              <p className="text-[20px] text-primary-500">
                 <span className="font-bold">30,000</span> Foreigners have
                 visited.
                 <br />
@@ -198,13 +202,13 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="relative">
+            <div className="w-full rounded-lg">
               <Image
                 src="/adamspeak1.png"
-                width={500}
-                height={300}
+                width={600}
+                height={100}
                 alt="Adam's Peak - Most visited place"
-                className="object-contain"
+                className="object-contain rounded-b-lg"
               />
             </div>
           </div>
