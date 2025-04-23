@@ -6,12 +6,12 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100 flex flex-col items-center justify-center w-full">
       <div className="container w-full  mx-[16px] sm:mx-[64px] md:mx-[120px] ">
-        <div className="grid w-full grid-cols-1 md:grid-cols-5 py-6 ">
+        <div className="grid sm:gap-0 gap-2 w-full grid-cols-1 md:grid-cols-5 py-6 ">
           {/* Logo Section */}
-          <div className="col-span-1 sm:place-content-start md:row-span-1">
+          <div className="sm:col-span-4 md:col-span-1 flex sm:justify-start justify-center sm:items-start  md:row-span-1">
             <Link
               href="/"
-              className="inline-flex w-[180px] h-auto items-center">
+              className="inline-flex w-[180px] h-auto items-center ">
               <Image
                 src="/logo.png"
                 alt="Plex.lk Logo"
@@ -24,15 +24,15 @@ export default function Footer() {
           </div>
 
           {/* Visa Process System */}
-          <div className="col-span-1 flex justify-end items-start">
-            <div className="flex items-center space-x-1">
+          <div className="md:col-span-1 sm:col-span-2 sm:col-start-6 flex justify-center sm:justify-end sm:items-start sm:text-right">
+            <Link href="/visa-process " className="flex items-center space-x-1">
               <h3 className="text-[14px] font-medium">Visa Process System</h3>
               <ArrowUpRight className="h-4 w-4 bg-black text-white rounded-sm" />
-            </div>
+            </Link>
           </div>
 
           {/* Navigation */}
-          <div className="col-span-1 flex flex-col justify-start items-end text-right">
+          <div className="col-span-1 flex flex-col justify-center sm:justify-start sm:items-end text-center sm:text-right ">
             <h3 className="mb-2 text-[14px] font-medium">Navigation</h3>
             <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
@@ -60,7 +60,7 @@ export default function Footer() {
           </div>
 
           {/* Developers */}
-          <div className="col-span-1  flex flex-col justify-start items-end text-right">
+          <div className="col-span-1 flex flex-col justify-center sm:justify-start sm:items-end text-center sm:text-right ">
             <h3 className="mb-2 text-[14px] font-medium">Developers</h3>
             <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
 
           {/* Learn More About */}
-          <div className="col-span-1  flex flex-col justify-start items-end text-right">
+          <div className="col-span-1 flex flex-col justify-center sm:justify-start sm:items-end text-center sm:text-right ">
             <h3 className="mb-2 text-[14px] font-medium">Learn More About</h3>
             <ul className="space-y-1 text-[12px] text-gray-500 text-muted-foreground">
               <li>
