@@ -13,12 +13,11 @@ export default function Home() {
         <div className="hidden sm:block absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="space-y-4">
-            <h1 className="text-[64px] md:text-[128px] sm:text-6xl  sm:leading-[0.5] leading-[1] font-bold tracking-tight">
+            <h1 className="text-[64px] md:text-[96px] sm:text-6xl  sm:leading-[.9] leading-[1] font-bold tracking-tight">
               <span className="flex items-center gap-2 ">
                 Explore<span className="text-primary-500">,</span>{" "}
                 <Image src="/flag.png" alt="Logo" width={49} height={74} />
               </span>
-              <br className="hidden sm:block" />
               Play <span className="text-primary-500">&</span> Share.
             </h1>
             <p className="text-lg text-muted-foreground max-w-[600px] pt-3">
