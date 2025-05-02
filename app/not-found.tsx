@@ -31,7 +31,7 @@ export default function NotFound() {
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">Popular Destinations</h2>
+            <h2 className="text-xl font-bold ">Popular Destinations</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <Link
                 href="/explore/sigiriya"

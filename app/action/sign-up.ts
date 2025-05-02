@@ -13,13 +13,15 @@ const signUpSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
+export type FormData = z.infer<typeof signUpSchema>;
+
 export async function signUp(formData: FormData) {
   const validated = signUpSchema.safeParse({
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    country: formData.get("country"),
-    email: formData.get("email"),
-    password: formData.get("password"),
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    country: formData.country,
+    email: formData.email,
+    password: formData.password,
   });
 
   if (!validated.success) {
