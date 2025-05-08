@@ -4,9 +4,9 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 flex flex-col items-center justify-center w-full">
-      <div className="container w-full  mx-[16px] sm:mx-[64px] md:mx-[120px] ">
-        <div className="grid sm:gap-0 gap-2 w-full grid-cols-1 md:grid-cols-5 py-6 ">
+    <footer className="bg-gray-100  w-full">
+      <div className="container   flex">
+        <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px] grid sm:gap-0 gap-2 w-full grid-cols-1 md:grid-cols-5 py-6  ">
           {/* Logo Section */}
           <div className="sm:col-span-4 md:col-span-1 flex sm:justify-start justify-center sm:items-start  md:row-span-1">
             <Link
@@ -124,7 +124,6 @@ export default function Footer() {
         </div>
       </div>
 
-      
       <div className=" py-2 bg-white w-full h-auto">
         <div className="flex  flex-col items-center justify-center sm:gap-4 gap-1 md:flex-row md:justify-center">
           <p className="text-xs text-gray-600">© 2024 Plex.lk</p>
