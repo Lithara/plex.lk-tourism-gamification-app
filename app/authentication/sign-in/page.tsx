@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
-
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "../auth-layout";
@@ -26,7 +26,25 @@ export default function SignIn() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e: React.FormEvent) => {
+    // Prevent form submission if email or password is empty
+    e.preventDefault();
+
+    const result = await signIn("credentials", {
+      ...formData,
+      redirect: false,
+    });
+
+    console.log("Credentials signIn result:", result);
+
+    if (result?.error) {
+      setError(result.error);
+      console.log("Error signing in:", result.error);
+    } else {
+      // Redirect to the home page or any other page
+      window.location.href = "/";
+    }
+  };
 
   return (
     <AuthLayout>
