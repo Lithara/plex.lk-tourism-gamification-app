@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/app/action/sign-up";
+
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 
@@ -10,18 +10,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "../auth-layout";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     country: "",
     email: "",
     password: "",
@@ -50,37 +50,7 @@ export default function SignUp() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    setIsLoading(true);
-    setError(null); // Reset error state
-
-    const result = await signUp(formData);
-    if (!passwordsMatch) {
-      setIsLoading(false);
-      return;
-    }
-    if (result?.error) {
-      // set error message based on the error response
-      if (result.error.email) {
-        setError(result.error.email[0]);
-      } else if (result.error.password) {
-        setError(result.error.password[0]);
-      } else if (result.error.general) {
-        setError(result.error.general[0]);
-      } else {
-        setError("An unknown error occurred. Please try again.");
-      }
-    } else {
-      // Redirect to the home page or any other page after successful sign-up
-      setIsLoading(false);
-      router.push("/");
-
-      // router.push("/authentication/sign-in");
-    }
-    setIsLoading(false);
-  };
+  const handleSubmit = async () => {};
 
   async function handleGoogleSignIn() {
     const result = await signIn("google", { redirect: false });
@@ -115,21 +85,14 @@ export default function SignUp() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid gap-4">
               <Input
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 placeholder="First Name"
                 required
               />
-              <Input
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Last Name"
-                required
-              />
+
               <Input
                 id="email"
                 name="email"

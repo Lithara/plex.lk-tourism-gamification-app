@@ -1,10 +1,8 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-
-import { ChevronRight, Flag } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="min-h-screen static mx-[16px] sm:mx-[64px] md:mx-[120px] ">
       {/* Hero Section */}
