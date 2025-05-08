@@ -8,9 +8,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "../auth-layout";
 import Image from "next/image";
+// import { signInAction } from "@/app/action/auth";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {};
 
   return (
     <AuthLayout>
@@ -33,39 +49,50 @@ export default function SignIn() {
           <h2 className="text-2xl font-bold">Sign In</h2>
         </div>
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Input
-              id="email"
-              placeholder="client@client.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-            />
-          </div>
-          <div className="space-y-2">
-            <div className="relative">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
               <Input
-                id="password"
-                placeholder="Enter your password"
-                type={showPassword ? "text" : "password"}
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="client@client.com"
+                type="email"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect="off"
               />
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2"
-                onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </Button>
             </div>
-          </div>
-          <Button className="w-full bg-primary-500 hover:bg-primary-600">
-            Sign In
-          </Button>
+            <div className="space-y-2">
+              <div className="relative">
+                <Input
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  type={showPassword ? "text" : "password"}
+                />
+                {error && <p className="text-red-500">{error}</p>}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
+            <Button
+              type="submit"
+              className="w-full bg-primary-500 hover:bg-primary-600">
+              Sign In
+            </Button>
+          </form>
         </div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
