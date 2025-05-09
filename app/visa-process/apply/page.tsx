@@ -19,6 +19,70 @@ import { Check } from "lucide-react";
 export default function VisaApplication() {
   const [currentStep, setCurrentStep] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    personalInfo: {
+      surname: "",
+      otherNames: "",
+      title: "",
+      civilStatus: "",
+      dateOfBirth: "",
+      gender: "",
+      nationality: "",
+      countryOfBirth: "",
+      occupation: "",
+    },
+    passportInfo: {
+      passportNumber: "",
+      placeOfIssue: "",
+      passportIssueDate: "",
+      passportExpiryDate: "",
+    },
+    childInfo: {
+      numberOfChildren: 0,
+      child1Surname: "",
+      child1OtherNames: "",
+      child1DateOfBirth: "",
+      child1Gender: "",
+      child1Relationship: "",
+      child2Surname: "",
+      child2OtherNames: "",
+      child2DateOfBirth: "",
+      child2Gender: "",
+      child2Relationship: "",
+    },
+
+    travelInfo: {
+      intendedArrivalDate: "",
+      purposeOfVisit: "",
+      portOfDeparture: "",
+      flightNumber: "",
+    },
+
+    contactInfo: {
+      numberAndStreet: "",
+      city: "",
+      state: "",
+      zipPostalCode: "",
+      country: "",
+      addressInSriLanka: "",
+      email: "",
+      telephoneNumber: "",
+      mobileNumber: "",
+      faxNumber: "",
+    },
+    declarations: {
+      validResidentVisa: false,
+      currentlyInSriLanka: false,
+      validMultipleEntryVisa: false,
+    },
+    documentUpload: {
+      passportPhoto: null,
+      portraitPhoto1: null,
+      portraitPhoto2: null,
+      returnTicket: null,
+      proofOfAccommodation: null,
+    },
+  });
 
   const totalSteps = 8;
 
