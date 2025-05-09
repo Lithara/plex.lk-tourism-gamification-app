@@ -8,6 +8,7 @@ interface RegisterUserParams {
   name: string;
   email: string;
   password: string;
+  country: string;
 }
 
 export async function registerUser({

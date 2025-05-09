@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowUpRight, CircleAlert, Menu, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 interface NavBarProps {
   variant?: "landing" | "app" | "visa";
@@ -16,10 +18,29 @@ interface NavBarProps {
 const Navbar = ({
   variant = "app",
   showVisa = false,
-  //showSearch = false,
+
   activeItem,
 }: NavBarProps) => {
   const [isVisible, setIsVisible] = useState(true);
+
+  // get navigation
+  const navigation = usePathname();
+  console.log("navigation", navigation);
+
+  // if navigation == "/visa-process" then set variant to visa
+  if (navigation === "/visa-process") {
+    showVisa = true;
+    variant = "visa";
+  } else {
+    showVisa = false;
+    variant = "app";
+  }
+
+  // get user in session
+
+  const session = useSession();
+
+  const user = session?.data?.user;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,31 +83,33 @@ const Navbar = ({
         }`}>
         <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px] h-full  w-full flex sm:gap-4 items-center justify-between  text-xs sm:text-sm font-bold">
           {/* left side */}
-          <div>
-            {/*plexlk logo */}
-            <Link href="/" className="flex items-center">
-              <div className="h-full sm:w-36 w-20">
-                <Image
-                  src="/logo.png"
-                  alt="plexlk logo"
-                  width={132}
-                  height={26.94}
-                  layout="responsive"
-                />
-              </div>
-              {showVisa && (
-                <Badge
-                  variant="secondary"
-                  className=" bg-primary-500 text-white mb-8 ">
-                  Visa
-                </Badge>
-              )}
-            </Link>
-          </div>
+          {user && (
+            <div>
+              {/*plexlk logo */}
+              <Link href="/" className="flex items-center">
+                <div className="h-full sm:w-36 w-20">
+                  <Image
+                    src="/logo.png"
+                    alt="plexlk logo"
+                    width={132}
+                    height={26.94}
+                    layout="responsive"
+                  />
+                </div>
+                {showVisa && (
+                  <Badge
+                    variant="secondary"
+                    className=" bg-primary-500 text-white mb-8 ">
+                    Visa
+                  </Badge>
+                )}
+              </Link>
+            </div>
+          )}
 
           {/* middle  */}
-          <div>
-            {variant !== "landing" && variant !== "visa" && (
+          <div className="hidden sm:flex items-center gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+            {variant !== "visa" && (
               <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
                 <Link
                   href="/explore"
@@ -118,15 +141,30 @@ const Navbar = ({
                   )}>
                   Leaderboard
                 </Link>
+              </nav>
+            )}
+
+            {variant === "visa" && (
+              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
                 <Link
-                  href="/badges"
+                  href="/visa-process"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
-                    activeItem === "badges"
+                    activeItem === "visa-process"
                       ? "text-foreground font-medium"
                       : "text-foreground/60"
                   )}>
-                  Badges
+                  Apply Now
+                </Link>
+                <Link
+                  href="/visa-process"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "visa-process"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Contact Us
                 </Link>
               </nav>
             )}
@@ -134,7 +172,7 @@ const Navbar = ({
 
           {/* right side */}
           <div className="flex items-center gap-2">
-            {variant !== "landing" && variant !== "visa" && (
+            {variant !== "visa" && (
               <div className="bg-yellow-50 p-2   w-auto flex items-center justify-center rounded-full text-amber-900 text-xs">
                 <p className="flex items-center gap-1">
                   5 PLX <CircleAlert className="w-4 h-4"></CircleAlert>
