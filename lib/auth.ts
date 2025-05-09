@@ -38,6 +38,8 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user.hashedPassword) {
+          //Return error if email or password is incorrect
+
           return null;
         }
 
