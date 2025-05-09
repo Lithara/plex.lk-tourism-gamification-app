@@ -1,8 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CircleAlert, Menu, UserRound } from "lucide-react";
+import { ArrowUpRight, CircleAlert, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { signOut, useSession } from "next-auth/react";
@@ -168,51 +168,50 @@ const Navbar = ({
                   </p>
                 </div>
               )}
-              {variant !== "landing" && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <div className="p-1 border-2  border-gray-400 sm:border-none sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
-                      <UserRound
-                        className="bg-gray-400 rounded-full w-auto h-full"
-                        color="white"></UserRound>
-                    </div>
-                  </DropdownMenuTrigger>
 
-                  <DropdownMenuContent
-                    className="w-40 flex flex-col items-center bg-white text-center"
-                    align="end">
-                    <div className="sm:hidden">
-                      <DropdownMenuItem>
-                        <Link href="/explore">Explore</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href="/feed">Feed</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href="/leaderboard">Leaderboard</Link>
-                      </DropdownMenuItem>
-                    </div>
-                    <DropdownMenuSeparator />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="p-1 border-2  border-gray-400 sm:border-none sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
+                    <UserRound
+                      className="bg-gray-400 rounded-full w-auto h-full"
+                      color="white"></UserRound>
+                  </div>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  className="w-40 flex flex-col items-center bg-white text-center"
+                  align="end">
+                  <div className="sm:hidden">
                     <DropdownMenuItem>
-                      <Link href="/account">
-                        <span className="font-bold text-md">Account</span>
-                      </Link>
+                      <Link href="/explore">Explore</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                      <Button
-                        onClick={() => signOut()}
-                        variant="ghost"
-                        className="w-full text-primary-500">
-                        <span className="font-bold text-md">Sign Out</span>
-                      </Button>
+                      <Link href="/feed">Feed</Link>
                     </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+                    <DropdownMenuItem>
+                      <Link href="/leaderboard">Leaderboard</Link>
+                    </DropdownMenuItem>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link href="/account">
+                      <span className="font-bold text-md">Account</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button
+                      onClick={() => signOut()}
+                      variant="ghost"
+                      className="w-full text-primary-500">
+                      <span className="font-bold text-md">Sign Out</span>
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           )}
 
-          {!user && variant !== "landing" && (
+          {!user && (
             <div className="hidden sm:flex items-center gap-2">
               <Link href="/authentication/sign-in">
                 <Button variant="ghost" className="h-10 px-4">
