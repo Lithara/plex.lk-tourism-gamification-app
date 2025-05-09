@@ -55,3 +55,17 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+model VisaApplication {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  personalInfo    Json     @map("personal_info")
+  passportInfo    Json     @map("passport_info")
+  childInfo       Json     @map("child_info")
+  travelInfo      Json     @map("travel_info")
+  contactInfo     Json     @map("contact_info")
+  declarations    Json     @map("declarations")
+  documentUpload  Json     @map("document_upload")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
