@@ -10,7 +10,8 @@ export const signUpSchema = z.object({
   // password validation
   password: z
     .string()
-    .min(8, { message: "Password must be at least 8 characters long" }),
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .max(10, { message: "Password cannot exceed 10 characters" }),
 });
 
 export const signInSchema = z.object({

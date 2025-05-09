@@ -59,6 +59,8 @@ export default function ProfilePage() {
                       src="/diverse-professional-profiles.png"
                       alt="Profile"
                       className="w-full h-full object-cover"
+                      width={40}
+                      height={40}
                     />
                   </div>
                   <div>
@@ -114,6 +116,8 @@ export default function ProfilePage() {
                     src="/tropical-beach-paradise.png"
                     alt="Beach"
                     className="w-full h-64 object-cover rounded-lg"
+                    width={640}
+                    height={360}
                   />
                 </div>
 
@@ -154,6 +158,8 @@ export default function ProfilePage() {
                       src="/diverse-professional-profiles.png"
                       alt="Profile"
                       className="w-full h-full object-cover"
+                      width={40}
+                      height={40}
                     />
                   </div>
                   <div>
@@ -209,6 +215,8 @@ export default function ProfilePage() {
                     src="/golden-hour-shoreline.png"
                     alt="Sunset Beach"
                     className="w-full h-64 object-cover rounded-lg"
+                    width={640}
+                    height={360}
                   />
                 </div>
 
@@ -329,6 +337,8 @@ export default function ProfilePage() {
                   src="/connected-gazes.png"
                   alt="Profile"
                   className="w-full h-full object-cover"
+                  width={200}
+                  height={200}
                 />
               </div>
             </div>

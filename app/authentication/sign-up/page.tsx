@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { AuthLayout } from "../auth-layout";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { registerUser } from "@/app/action/auth";
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +51,52 @@ export default function SignUp() {
     });
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!passwordsMatch) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setError(null);
+
+    setIsLoading(true);
+
+    try {
+      const result = await registerUser(formData);
+      if (result?.error) {
+        if (result.error.email) {
+          setError(result.error.email);
+        } else if (result.error.name) {
+          setError(result.error.name);
+        } else if (result.error.country) {
+          setError(result.error.country);
+        } else if (result.error.password) {
+          setError(result.error.password);
+        } else {
+          setError("An error occurred. Please try again.");
+        }
+      }
+      if (result?.success) {
+        const signInResult = await signIn("credentials", {
+          email: formData.email,
+          password: formData.password,
+          redirect: false,
+        });
+
+        if (signInResult?.error) {
+          setError("Automatic sign-in failed. Please sign in manually.");
+        } else {
+          router.push("/");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   async function handleGoogleSignIn() {
     const result = await signIn("google", { redirect: false });
@@ -133,6 +179,7 @@ export default function SignUp() {
                   type={showPassword ? "text" : "password"}
                 />
                 <Button
+                  type="button"
                   variant="ghost"
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -154,6 +201,7 @@ export default function SignUp() {
                   type={showConfirmPassword ? "text" : "password"}
                 />
                 <Button
+                  type="button"
                   variant="ghost"
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2"

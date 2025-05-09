@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { revalidatePath } from "next/cache";
+import { signUpSchema } from "@/lib/validations";
 
 interface RegisterUserParams {
   name: string;
@@ -18,6 +19,20 @@ export async function registerUser({
   password,
 }: RegisterUserParams) {
   const hashedPassword = await hash(password, 10);
+
+  // Validation user input with zod using lib/validation.js
+  const validationResult = signUpSchema.safeParse({
+    name,
+    email,
+    country,
+    password,
+  });
+  if (!validationResult.success) {
+    const errors = validationResult.error.flatten().fieldErrors;
+    return {
+      error: errors,
+    };
+  }
 
   const existingUser = await prisma.user.findUnique({
     where: { email },

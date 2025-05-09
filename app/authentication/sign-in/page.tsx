@@ -26,7 +26,7 @@ export default function SignIn() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent form submission if email or password is empty
     e.preventDefault();
 
@@ -35,11 +35,8 @@ export default function SignIn() {
       redirect: false,
     });
 
-    console.log("Credentials signIn result:", result);
-
     if (result?.error) {
-      setError(result.error);
-      console.log("Error signing in:", result.error);
+      setError("Please check your email and password");
     } else {
       // Redirect to the home page or any other page
       window.location.href = "/";
@@ -91,8 +88,8 @@ export default function SignIn() {
                   placeholder="Enter your password"
                   type={showPassword ? "text" : "password"}
                 />
-                {error && <p className="text-red-500">{error}</p>}
                 <Button
+                  type="button"
                   variant="ghost"
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -104,6 +101,7 @@ export default function SignIn() {
                   )}
                 </Button>
               </div>
+              {error && <p className="text-red-500">{error}</p>}
             </div>
             <Button
               type="submit"
