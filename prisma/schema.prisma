@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   @@map("users")
+  favorites Favorite[]
 }
 
 model Account {
@@ -77,29 +78,31 @@ model Place {
   slug            String           @unique
   name            String
   country         String
+  category        String
   description     String
   longDescription String
   specialNotes    String
   mainImage       String
   galleryImages   Json             // Stores array of image URLs
-  plexes          Int
-  flags           Int
-  visitors        Int
-  difficulty      String
-  popular         Boolean
+  plexes          Int @default(0)
+  flags           Int @default(0)
+  visitors        Int @default(0)
+  difficulty      String @default("easy")
+  popular         Boolean 
   knowledge       Boolean
   knowledgeContent KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
-  knowledgeContentId Int?          @unique
+  knowledgeContentId String?          @unique
   coordinates     Coordinates?     @relation(fields: [coordinatesId], references: [id])
-  coordinatesId   Int?            @unique
+  coordinatesId   String?           @unique
   addedBy         PlaceAddedBy?        @relation(fields: [addedById], references: [id])
-  addedById       Int?            @unique
+  addedById       String?            @unique
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  favorites Favorite[]
 }
 
 model KnowledgeContent {
-  id              Int               @id @default(autoincrement())
+  id              String               @id @default(uuid())
   title           String
   description     String
   sections        KnowledgeSection[]
@@ -107,23 +110,35 @@ model KnowledgeContent {
 }
 
 model KnowledgeSection {
-  id                Int              @id @default(autoincrement())
+  id                String              @id @default(uuid())
   text              String
   images            Json?            // Stores array of image URLs, nullable
   knowledgeContent  KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
-  knowledgeContentId Int?
+  knowledgeContentId String?
 }
 
 model Coordinates {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(uuid())
   lat       Float
   lng       Float
   place     Place?  @relation
 }
 
 model PlaceAddedBy {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(uuid())
   name      String
   time      String
   place     Place?  @relation
 }
+
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  placeId   String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  place     Place    @relation(fields: [placeId], references: [id])
+  @@unique([userId, placeId]) // Prevent duplicate favorites
+}
+
