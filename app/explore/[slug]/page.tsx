@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,8 +12,12 @@ import { getLocationBySlug } from "@/data/locations";
 import { notFound } from "next/navigation";
 
 export default function LocationPage({ params }: { params: { slug: string } }) {
-  const location = getLocationBySlug(params.slug);
+  const { slug } = use(params);
+  const location = getLocationBySlug(slug);
   const [isKnowledgeModalOpen, setIsKnowledgeModalOpen] = useState(false);
+
+  // Check if location exists
+  // If location is not found, redirect to 404 page
 
   // If location not found, show 404
   if (!location) {

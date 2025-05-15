@@ -69,3 +69,61 @@ model VisaApplication {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
+
+
+model Place {
+  id              String           @id
+  slug            String           @unique
+  name            String
+  country         String
+  description     String
+  longDescription String
+  specialNotes    String
+  mainImage       String
+  galleryImages   Json             // Stores array of image URLs
+  plexes          Int
+  flags           Int
+  visitors        Int
+  difficulty      String
+  popular         Boolean
+  knowledge       Boolean
+  knowledgeContent KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
+  knowledgeContentId Int?          @unique
+  coordinates     Coordinates?     @relation(fields: [coordinatesId], references: [id])
+  coordinatesId   Int?            @unique
+  addedBy         PlaceAddedBy?        @relation(fields: [addedById], references: [id])
+  addedById       Int?            @unique
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model KnowledgeContent {
+  id              Int               @id @default(autoincrement())
+  title           String
+  description     String
+  sections        KnowledgeSection[]
+  place           Place?            @relation
+}
+
+model KnowledgeSection {
+  id                Int              @id @default(autoincrement())
+  text              String
+  images            Json?            // Stores array of image URLs, nullable
+  knowledgeContent  KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
+  knowledgeContentId Int?
+}
+
+model Coordinates {
+  id        Int     @id @default(autoincrement())
+  lat       Float
+  lng       Float
+  place     Place?  @relation
+}
+
+model PlaceAddedBy {
+  id        Int     @id @default(autoincrement())
+  name      String
+  time      String
+  place     Place?  @relation
+}
