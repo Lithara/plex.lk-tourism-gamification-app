@@ -94,69 +94,68 @@ const Navbar = ({
           </div>
 
           {/* middle  */}
-          {user && (
-            <div className="hidden sm:flex items-center gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
-              {variant !== "visa" && (
-                <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
-                  <Link
-                    href="/explore"
-                    className={cn(
-                      "transition-colors hover:text-foreground/80",
-                      activeItem === "explore"
-                        ? "text-foreground font-medium"
-                        : "text-foreground/60"
-                    )}>
-                    Explore
-                  </Link>
-                  <Link
-                    href="/feed"
-                    className={cn(
-                      "transition-colors hover:text-foreground/80",
-                      activeItem === "feed"
-                        ? "text-foreground font-medium"
-                        : "text-foreground/60"
-                    )}>
-                    Feed
-                  </Link>
-                  <Link
-                    href="/leaderboard"
-                    className={cn(
-                      "transition-colors hover:text-foreground/80",
-                      activeItem === "leaderboard"
-                        ? "text-foreground font-medium"
-                        : "text-foreground/60"
-                    )}>
-                    Leaderboard
-                  </Link>
-                </nav>
-              )}
 
-              {variant === "visa" && (
-                <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
-                  <Link
-                    href="/visa-process/apply"
-                    className={cn(
-                      "transition-colors hover:text-foreground/80",
-                      activeItem === "visa-process"
-                        ? "text-foreground font-medium"
-                        : "text-foreground/60"
-                    )}>
-                    Apply Now
-                  </Link>
-                  <Link
-                    href="/contact-us"
-                    className={cn(
-                      "transition-colors hover:text-foreground/80",
-                      activeItem === "visa-process"
-                        ? "text-foreground font-medium"
-                        : "text-foreground/60"
-                    )}>
-                    Contact Us
-                  </Link>
-                </nav>
-              )}
-            </div>
-          )}
+          <div className="hidden sm:flex items-center gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+            {variant !== "visa" && (
+              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+                <Link
+                  href="/explore"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "explore"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Explore
+                </Link>
+                <Link
+                  href="/feed"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "feed"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Feed
+                </Link>
+                <Link
+                  href="/leaderboard"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "leaderboard"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Leaderboard
+                </Link>
+              </nav>
+            )}
+
+            {variant === "visa" && (
+              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+                <Link
+                  href="/visa-process/apply"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "visa-process"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Apply Now
+                </Link>
+                <Link
+                  href="/contact-us"
+                  className={cn(
+                    "transition-colors hover:text-foreground/80",
+                    activeItem === "visa-process"
+                      ? "text-foreground font-medium"
+                      : "text-foreground/60"
+                  )}>
+                  Contact Us
+                </Link>
+              </nav>
+            )}
+          </div>
 
           {/* right side */}
           {user && (
