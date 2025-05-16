@@ -18,14 +18,15 @@ export async function POST(request: Request) {
       },
     });
   } else {
-    await prisma.favorite.create({
+    const createFav = await prisma.favorite.create({
       data: {
-        placeId,
         userId,
+        placeId,
       },
     });
+
+    return NextResponse.json(createFav);
   }
-  // if the favorite is created return 201
-  // if the favorite is deleted return 204
+
   return NextResponse.json({});
 }

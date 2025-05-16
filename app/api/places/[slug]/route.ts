@@ -6,41 +6,53 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   // Get the place slug from the request parameters
-  const slug = params.slug;
+
+  const { slug } = params;
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
 
-  console.log("Fetching place with slug:", params.slug);
-
-  const place = await prisma.place.findUnique({
-    where: {
-      slug: slug,
-    },
-    include: {
-      knowledgeContent: false,
-      coordinates: true,
-      addedBy: true,
-    },
-  });
-
-  if (userId) {
-    const favorite = await prisma.favorite.findFirst({
+  try {
+    const place = await prisma.place.findUnique({
       where: {
-        placeId: place.id,
-        userId: userId,
+        slug: slug,
       },
+      include: {
+        coordinates: true,
+        addedBy: true,
+        knowledgeContent: {
+          include: {
+            sections: true,
+          },
+        },
+      },
+      // add knowledge sections
     });
 
-    if (favorite) {
-      console.log("Favorite found");
+    if (userId) {
+      const favorite = await prisma.favorite.findFirst({
+        where: {
+          placeId: place.id,
+          userId: userId,
+        },
+      });
 
-      // push favorite status to place object
-      place.favorite = true;
-    } else {
-      // push favorite status to place object
-      place.favorite = false;
+      if (favorite) {
+        console.log("Favorite found");
+
+        // push favorite status to place object
+        place.favorite = true;
+      } else {
+        // push favorite status to place object
+        place.favorite = false;
+      }
     }
-  }
 
-  return NextResponse.json(place);
+    return NextResponse.json(place);
+  } catch (error) {
+    console.error("Error fetching place:", error);
+    return NextResponse.json(
+      { error: "Error fetching place" },
+      { status: 500 }
+    );
+  }
 }

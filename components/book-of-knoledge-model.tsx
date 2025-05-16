@@ -77,7 +77,7 @@ export function BookOfKnowledgeModal({
         {/* Hero image */}
         <div className="relative h-80 w-full">
           <Image
-            src={location.mainImage || "/placeholder.svg"}
+            src={`/images${location.mainImage}` || "/placeholder.svg"}
             alt={location.name}
             fill
             className="object-cover"
@@ -92,9 +92,7 @@ export function BookOfKnowledgeModal({
           </h2>
           <div className="flex items-center gap-1 text-sm text-gray-500 mb-6">
             <MapPin className="h-4 w-4" />
-            <span>
-              {location.name}, {location.country}
-            </span>
+            <span>{location.name}, Sri lanka</span>
           </div>
 
           <div className="space-y-6">
@@ -102,28 +100,29 @@ export function BookOfKnowledgeModal({
               {location.knowledgeContent.description}
             </p>
 
-            {location.knowledgeContent.sections.map((section, index) => (
-              <div key={index} className="space-y-4">
-                <p className="text-gray-700">{section.text}</p>
+            {location.knowledgeContent.sections &&
+              location.knowledgeContent.sections.map((section, index) => (
+                <div key={index} className="space-y-4">
+                  <p className="text-gray-700">{section.text}</p>
 
-                {section.images && section.images.length > 0 && (
-                  <div className="grid grid-cols-2 gap-4 my-6">
-                    {section.images.map((image, imgIndex) => (
-                      <div
-                        key={imgIndex}
-                        className="relative h-48 rounded-lg overflow-hidden">
-                        <Image
-                          src={image || "/placeholder.svg"}
-                          alt={`${location.name} image ${imgIndex + 1}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                  {section.images && section.images.length > 0 && (
+                    <div className="grid grid-cols-2 gap-4 my-6">
+                      {section.images.map((image, imgIndex) => (
+                        <div
+                          key={imgIndex}
+                          className="relative h-48 rounded-lg overflow-hidden">
+                          <Image
+                            src={`/images${image}` || "/placeholder.svg"}
+                            alt={`${location.name} image ${imgIndex + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
       </div>
