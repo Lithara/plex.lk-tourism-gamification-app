@@ -6,7 +6,10 @@ import { Search, MapPin, Filter, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { locations } from "@/data/locations"; // Assuming you have a locations data file
+// Assuming you have a locations data file
+
+import { use, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function ExplorePage() {
   const categories = [
@@ -21,6 +24,76 @@ export default function ExplorePage() {
     "Museums",
   ];
 
+  const session = useSession();
+
+  const [locations, setLocations] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+  const [category, setCategory] = useState("");
+
+  const userId = session?.data?.user?.id;
+
+  const toggleFavorite = async (placeId) => {
+    if (!userId) {
+      return;
+    }
+    try {
+      const response = await fetch(`/api/places/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ placeId, userId }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      if (data) {
+        // Update the locations state to reflect the new favorite status
+        setLocations((prevLocations) =>
+          prevLocations.map((location) =>
+            location.id === placeId
+              ? { ...location, favorite: !location.favorite }
+              : location
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch data from the API
+    //add user id to the request
+    // const userId =
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          `/api/places?userId=${userId}&search=${search}&difficulty=${difficulty}&category=${category}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setLocations(data);
+        console.log("Fetched locations:", data);
+        // Set locations state here if using useState
+      } catch (error) {
+        console.error("Error fetching locations:", error);
+      }
+    }
+    fetchData();
+  }, [userId, search, difficulty, category]);
+
   return (
     <div className="min-h-screen bg-white">
       {/* Search Bar */}
@@ -28,11 +101,21 @@ export default function ExplorePage() {
         <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-3">
           <div className="relative max-w-xl mx-auto">
             <Input
+              onChange={(e) => {
+                setSearchValue(e.target.value);
+              }}
+              value={searchValue}
               type="text"
               placeholder="Search a Quest, Profile or Location"
               className="pl-4 pr-12 py-2 rounded-full border border-gray-300"
             />
             <Button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                setSearch(searchValue);
+              }}
               size="sm"
               className="absolute text-white right-1 top-1/2 -translate-y-1/2 rounded-full bg-primary-500 hover:bg-primary-600">
               <Search className="h-4 w-4" />
@@ -127,12 +210,20 @@ export default function ExplorePage() {
             <div className="flex space-x-4 pb-2">
               {categories.map((category, index) => (
                 <Button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCategory(category);
+                  }}
+                  // change the category to the selected category
+                  className={`${category === category ? "bg-primary-500" : ""}`}
                   key={index}
                   variant={index === 0 ? "default" : "ghost"}
                   size="sm"
-                  className={
-                    index === 0 ? "bg-primary-500 hover:bg-primary-600" : ""
-                  }>
+                  // className={
+                  //   index === 0 ? "bg-primary-500 hover:bg-primary-600" : ""
+                  // }
+                >
                   {category}
                 </Button>
               ))}
@@ -152,34 +243,35 @@ export default function ExplorePage() {
               <div>
                 <div className="relative">
                   <Image
-                    src={
-                      location.mainImage ||
-                      "/placeholder.svg?height=200&width=300&query=landscape"
-                    }
+                    src={`/images${location.mainImage}`}
                     alt={location.name}
                     width={300}
                     height={200}
                     className="w-full h-48 object-cover"
                   />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute top-2 right-2 h-8 w-8 rounded-full bg-white/80 hover:bg-white"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      // Add favorite logic here
-                    }}>
-                    <Heart className="h-4 w-4" />
-                    <span className="sr-only">Like</span>
-                  </Button>
-                  {location.popular && (
+                  {userId && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className={` ${
+                        location.favorite ? "bg-primary-500" : "bg-white/50"
+                      } absolute top-2 right-2 h-8 w-8 rounded-full hover:bg-white`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleFavorite(location.id);
+                      }}>
+                      <Heart className="h-4 w-4" />
+                      <span className="sr-only">Like</span>
+                    </Button>
+                  )}
+                  {location.popular === true && (
                     <Badge className="absolute top-2 left-2 bg-orange-500 hover:bg-orange-600">
                       Most Popular
                     </Badge>
                   )}
-                  {location.knowledge && (
-                    <Badge className="absolute bottom-2 left-2 bg-gray-800 hover:bg-gray-900">
+                  {location.knowledge === true && (
+                    <Badge className="absolute bottom-2 left-2 bg-gray-800 hover:bg-gray-900 text-white">
                       Book of Knowledge
                     </Badge>
                   )}
@@ -190,8 +282,7 @@ export default function ExplorePage() {
                       <h3 className="font-bold">{location.name}</h3>
                       <p className="text-sm text-gray-500 flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
-                        {location.location ||
-                          `${location.name}, ${location.country}`}
+                        {location.location || `${location.name}, Sri Lanka`}
                       </p>
                     </div>
                     <div className="flex items-center gap-1">

@@ -75,45 +75,47 @@ model VisaApplication {
 
 model Place {
   id              String           @id
-  slug            String           @unique
-  name            String
-  country         String
+  slug            String           @unique 
+  name            String 
+
+  district       String                
   category        String
-  description     String
-  longDescription String
-  specialNotes    String
+  description     String           @db.Text
+  longDescription String          @db.Text
+  specialNotes    String          @db.Text
   mainImage       String
   galleryImages   Json             // Stores array of image URLs
   plexes          Int @default(0)
   flags           Int @default(0)
   visitors        Int @default(0)
   difficulty      String @default("easy")
-  popular         Boolean 
-  knowledge       Boolean
+  popular         Boolean  @default(false)
+  knowledge       Boolean  @default(false)
   knowledgeContent KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
-  knowledgeContentId String?          @unique
+  knowledgeContentId String?        @unique  // can be null if not applicable 
   coordinates     Coordinates?     @relation(fields: [coordinatesId], references: [id])
   coordinatesId   String?           @unique
   addedBy         PlaceAddedBy?        @relation(fields: [addedById], references: [id])
   addedById       String?            @unique
   createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  updatedAt       DateTime        @updatedAt @default(now())
   favorites Favorite[]
+  
 }
 
 model KnowledgeContent {
   id              String               @id @default(uuid())
   title           String
-  description     String
-  sections        KnowledgeSection[]
+  description     String @db.Text
+  sections        KnowledgeSection[] 
   place           Place?            @relation
 }
 
 model KnowledgeSection {
   id                String              @id @default(uuid())
-  text              String
+  text              String @db.Text
   images            Json?            // Stores array of image URLs, nullable
-  knowledgeContent  KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
+  knowledgeContent  KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id] , onDelete :Cascade, onUpdate: SetNull)
   knowledgeContentId String?
 }
 
@@ -133,7 +135,7 @@ model PlaceAddedBy {
 
 
 model Favorite {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(uuid())
   userId    String
   placeId   String
   createdAt DateTime @default(now())
@@ -141,4 +143,5 @@ model Favorite {
   place     Place    @relation(fields: [placeId], references: [id])
   @@unique([userId, placeId]) // Prevent duplicate favorites
 }
+
 
