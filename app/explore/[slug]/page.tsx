@@ -26,6 +26,8 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
     // Fetch location data from API
+    // loading screen
+
     const fetchLocationData = async () => {
       const res = await fetch(`/api/places/${slug}?userId=${userId}`);
       if (!res.ok) {
@@ -40,16 +42,17 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
   }, [slug, userId]);
 
   const toggleFavorite = async () => {
-    if (!userId) {
+    if (!userId || !location) {
       return;
     }
+
     try {
       const response = await fetch(`/api/places/favorite`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ placeId: location.id, userId }),
+        body: JSON.stringify({ placeId: location?.id, userId }),
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -65,6 +68,10 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
+  };
+
+  const handleKnowledgeClick = async () => {
+    setIsKnowledgeModalOpen(true);
   };
 
   return (
@@ -196,11 +203,11 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
               )}
             </div>
 
-            {location.knowledge && (
+            {location.knowledge === true && (
               <Button
                 variant="outline"
                 className="flex bg-black text-white items-center gap-2 rounded-full"
-                onClick={() => setIsKnowledgeModalOpen(true)}>
+                onClick={handleKnowledgeClick}>
                 Read the book of knowledge
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -262,15 +269,19 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
               </p>
             </div>
 
-            <div className="mb-4">
-              <p className="text-sm text-gray-500">
-                Location permission required
-              </p>
-            </div>
+            {userId && (
+              <div>
+                <div className="mb-4">
+                  <p className="text-sm text-gray-500">
+                    Location permission required
+                  </p>
+                </div>
 
-            <Button className="w-full rounded-full bg-primary-500 hover:bg-primary-600 text-white">
-              Place my flag
-            </Button>
+                <Button className="w-full rounded-full bg-primary-500 hover:bg-primary-600 text-white">
+                  Place my flag
+                </Button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -304,7 +315,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                 </Button>
               </div>
             </div>
-            <div className=" p-2 relative h-full bg-gray-100 rounded-lg overflow-hidden">
+            <div className=" p-2 relative h-fulloverflow-hidden">
               <Image
                 src={`/maps/${location.district}.svg`}
                 alt="Sri Lanka map"
@@ -364,7 +375,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Environmental Message */}
-        <div className="relative rounded-lg overflow-hidden mb-12">
+        <div className="relative rounded-lg overflow-hidden mb-12 bg-green-50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col justify-center p-8">
               <h2 className="text-2xl font-bold mb-2">
@@ -372,9 +383,9 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                 clean & help to protect the world.
               </h2>
             </div>
-            <div className="relative h-64">
+            <div className="relative h-64 hidden md:block">
               <Image
-                src="/environment.jpg"
+                src="/environment.png"
                 alt="Environmental protection"
                 fill
                 className="object-cover"

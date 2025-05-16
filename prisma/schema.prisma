@@ -91,7 +91,7 @@ model Place {
   difficulty      String @default("easy")
   popular         Boolean  @default(false)
   knowledge       Boolean  @default(false)
-  knowledgeContent KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id])
+  knowledgeContent KnowledgeContent? @relation(fields: [knowledgeContentId], references: [id] , onDelete :SetNull, onUpdate: SetNull)
   knowledgeContentId String?        @unique  // can be null if not applicable 
   coordinates     Coordinates?     @relation(fields: [coordinatesId], references: [id])
   coordinatesId   String?           @unique
