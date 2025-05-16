@@ -30,7 +30,7 @@ export default function ExplorePage() {
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const [category, setCategory] = useState("");
+  const [mainCategory, setMainCategory] = useState("");
 
   const userId = session?.data?.user?.id;
 
@@ -72,7 +72,7 @@ export default function ExplorePage() {
     async function fetchData() {
       try {
         const response = await fetch(
-          `/api/places?userId=${userId}&search=${search}&difficulty=${difficulty}&category=${category}`,
+          `/api/places?userId=${userId}&search=${search}&difficulty=${difficulty}&category=${mainCategory}`,
           {
             method: "GET",
             headers: {
@@ -92,7 +92,7 @@ export default function ExplorePage() {
       }
     }
     fetchData();
-  }, [userId, search, difficulty, category]);
+  }, [userId, search, difficulty, mainCategory]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -213,17 +213,18 @@ export default function ExplorePage() {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    setCategory(category);
+                    setMainCategory(category);
                   }}
-                  // change the category to the selected category
-                  className={`${category === category ? "bg-primary-500" : ""}`}
+                  // change the color of the button if it is selected
+
                   key={index}
-                  variant={index === 0 ? "default" : "ghost"}
+                  variant={mainCategory === category ? "default" : "ghost"}
                   size="sm"
-                  // className={
-                  //   index === 0 ? "bg-primary-500 hover:bg-primary-600" : ""
-                  // }
-                >
+                  className={
+                    mainCategory === category
+                      ? "bg-primary-500 hover:bg-primary-600"
+                      : ""
+                  }>
                   {category}
                 </Button>
               ))}
