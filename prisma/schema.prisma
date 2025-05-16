@@ -15,6 +15,7 @@ model User {
   hashedPassword String?   @map("hashed_password")
   emailVerified DateTime? @map("email_verified")
   image         String?
+  coverImage    String?
   plxCount      Int?    @map("plx_count")
   accounts      Account[]
   sessions      Session[]
