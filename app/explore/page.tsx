@@ -2,14 +2,21 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Search, MapPin, Filter, Heart } from "lucide-react";
+import { Search, MapPin, Filter, Heart, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 // Assuming you have a locations data file
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function ExplorePage() {
   const categories = [
@@ -25,14 +32,13 @@ export default function ExplorePage() {
   ];
 
   const session = useSession();
+  const userId = session?.data?.user?.id;
 
   const [locations, setLocations] = useState([]);
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [difficulty, setDifficulty] = useState("");
-  const [mainCategory, setMainCategory] = useState("");
-
-  const userId = session?.data?.user?.id;
+  const [mainCategory, setMainCategory] = useState("All Locations");
 
   const toggleFavorite = async (placeId) => {
     if (!userId) {
@@ -150,26 +156,54 @@ export default function ExplorePage() {
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex items-center gap-1">
-                <span className="h-2 w-2 rounded-full bg-primary-500"></span>
-                Easy
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="ml-1">
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </Button>
+
+              <Select defaultValue="All" onValueChange={setDifficulty}>
+                <SelectTrigger className="w-[120px] h-8 text-foreground">
+                  <SelectValue />
+                </SelectTrigger>
+
+                <SelectContent className="w-[120px] bg-white">
+                  <SelectItem value="All">
+                    <div className="flex items-center gap-1">
+                      <Circle
+                        fill="currentColor"
+                        className="h-2 w-2 text-black-500"
+                      />
+                      <span> All</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="easy" className="flex items-center gap-1">
+                    <div className="flex items-center gap-1">
+                      <Circle
+                        fill="currentColor"
+                        className="h-2 w-2 text-primary-500"
+                      />
+                      <span> Easy</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem
+                    value="medium"
+                    className="flex items-center gap-1">
+                    <div className="flex items-center gap-1">
+                      <Circle
+                        fill="currentColor"
+                        className="h-2 w-2 text-yellow-500"
+                      />
+                      <span> Medium</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="hard" className="flex items-center gap-1">
+                    <div className="flex items-center gap-1">
+                      <Circle
+                        fill="currentColor"
+                        className="h-2 w-2 text-red-500"
+                      />
+                      <span> Hard</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+
               <Button
                 variant="outline"
                 size="sm"
