@@ -1,9 +1,29 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart } from "lucide-react";
+import UploadModal from "@/components/upload-model";
+import { CrossIcon, Heart } from "lucide-react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function ProfilePage() {
+  const session = useSession();
+  const user = session.data?.user;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleUpload = (data: {
+    files: File[];
+    caption: string;
+    location: string;
+  }) => {
+    console.log("Uploaded:", data);
+    setIsModalOpen(false);
+    // Here you would typically send the data to your backend
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div className="md:col-span-2">
@@ -331,18 +351,25 @@ export default function ProfilePage() {
       <div className="md:col-span-1">
         <div className="border rounded-lg overflow-hidden">
           <div className="h-40 bg-gradient-to-r from-orange-400 to-pink-500 relative">
+            <Image
+              src="/environment.png"
+              alt="Cover Image"
+              className="w-full h-full object-cover"
+              height={100}
+              width={100}
+            />
             <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
               <div className="w-20 h-20 rounded-full border-4 border-white bg-gray-200 overflow-hidden">
                 <Image
-                  src="/connected-gazes.png"
+                  src={user?.image ? `/images${user?.image}` : "/user.png"}
                   alt="Profile"
                   className="w-full h-full object-cover"
-                  width={200}
-                  height={200}
+                  width={80}
+                  height={80}
                 />
               </div>
             </div>
-            <button className="absolute top-2 right-2 bg-white/20 backdrop-blur-sm p-2 rounded-full">
+            <button className="absolute bottom-2 right-2 bg-white/20 backdrop-blur-sm p-2 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -361,9 +388,9 @@ export default function ProfilePage() {
 
           <div className="pt-12 px-4 pb-6 text-center">
             <div className="flex items-center justify-center mb-1">
-              <h2 className="text-xl font-bold">Wasath Theekshana</h2>
+              <h2 className="text-xl font-bold">{user?.name}</h2>
               <div className="bg-amber-50 text-amber-800 text-xs px-2 py-0.5 rounded-full ml-2">
-                5 PLX
+                {user?.plexes ? user?.plexes : 0} PLX
               </div>
             </div>
             <p className="text-sm text-gray-600 mb-4">
@@ -385,27 +412,40 @@ export default function ProfilePage() {
                 <div className="text-xs text-gray-500">Following</div>
               </div>
             </div>
-
-            <Button className="w-full bg-[#3AAEA9] hover:bg-[#2d8c8a]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-              </svg>
-              Edit my profile
+            <Link href="/account/personal-info">
+              <Button className="w-full bg-[#3AAEA9] hover:bg-[#2d8c8a]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mr-2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+                Edit my profile
+              </Button>
+            </Link>
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              variant="outline"
+              className="mt-2 w-full hover:bg-[#2d8c8a]">
+              <CrossIcon /> Add new post
             </Button>
           </div>
         </div>
       </div>
+
+      <UploadModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onUpload={handleUpload}
+      />
     </div>
   );
 }

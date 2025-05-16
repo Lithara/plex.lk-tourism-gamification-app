@@ -12,6 +12,8 @@ export default function AccountLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // get current children name
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 mx-[16px] sm:mx-[64px] md:mx-[120px] py-8">
@@ -32,7 +34,7 @@ export default function AccountLayout({
             className="mx-2">
             <polyline points="9 18 15 12 9 6" />
           </svg>
-          <span className="font-medium">Login & Security</span>
+          <span className="font-medium">Settings</span>
         </div>
 
         {children}

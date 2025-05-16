@@ -1,12 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Info, Shield, Eye } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function AccountPage() {
+  const session = useSession();
+  const user = session?.data?.user;
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-2">Account</h1>
-      <p className="text-gray-600 mb-8">Wasath Theekshana, wasath@test.com</p>
+      <p className="text-gray-600 mb-8">
+        {user?.name}, {user?.email}
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Link href="/account/profile">
