@@ -10,6 +10,7 @@ export async function GET(request: Request) {
   const places = await prisma.place.findMany({
     select: {
       id: true,
+      slug: true,
       name: true,
       description: true,
       mainImage: true,
@@ -34,11 +35,12 @@ export async function GET(request: Request) {
             contains: searchParams.get("category"),
           },
         }),
-      ...(searchParams.get("difficulty") && {
-        difficulty: {
-          contains: searchParams.get("difficulty"),
-        },
-      }),
+      ...(searchParams.get("difficulty") &&
+        searchParams.get("difficulty") !== "All" && {
+          difficulty: {
+            contains: searchParams.get("difficulty"),
+          },
+        }),
     },
   });
 

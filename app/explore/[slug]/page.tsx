@@ -1,28 +1,71 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect } from "react";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+
 import { MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookOfKnowledgeModal } from "@/components/book-of-knoledge-model";
-import { getLocationBySlug } from "@/data/locations";
+import MapEmbed from "@/components/MapEmbed";
+
 import { notFound } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function LocationPage({ params }: { params: { slug: string } }) {
   const { slug } = use(params);
-  const location = getLocationBySlug(slug);
+
   const [isKnowledgeModalOpen, setIsKnowledgeModalOpen] = useState(false);
 
   // Check if location exists
   // If location is not found, redirect to 404 page
+  const [location, setLocation] = useState({});
+  const session = useSession();
+  const userId = session?.data?.user?.id;
 
-  // If location not found, show 404
-  if (!location) {
-    notFound();
-  }
+  useEffect(() => {
+    // Fetch location data from API
+    const fetchLocationData = async () => {
+      const res = await fetch(`/api/places/${slug}?userId=${userId}`);
+      if (!res.ok) {
+        notFound();
+      }
+      const data = await res.json();
+      console.log(data);
+
+      setLocation(data);
+    };
+    fetchLocationData();
+  }, [slug, userId]);
+
+  const toggleFavorite = async () => {
+    if (!userId) {
+      return;
+    }
+    try {
+      const response = await fetch(`/api/places/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ placeId: location.id, userId }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      if (data) {
+        // Update the locations state to reflect the new favorite status
+        setLocation((prevLocation) => ({
+          ...prevLocation,
+          favorite: !prevLocation.favorite,
+        }));
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -33,6 +76,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
           <h1 className="text-3xl font-bold">{location.name}</h1>
           <div className="flex items-center gap-2">
             <Button
+              onClick={toggleFavorite}
               variant="ghost"
               size="sm"
               className="text-primary-500 flex items-center gap-1">
@@ -41,26 +85,26 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                 width="20"
                 height="20"
                 viewBox="0 0 24 24"
-                fill="none"
+                fill={location.favorite === true ? "teal" : "none"}
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
               </svg>
-              Saved
+              {location.favorite === true ? "Saved" : "Save"}
             </Button>
           </div>
         </div>
 
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {location.popular && (
+          {location.popular === true && (
             <Badge className="bg-orange-500 hover:bg-orange-600 rounded-full">
               Most Popular
             </Badge>
           )}
-          {location.knowledge && (
+          {location.knowledge === true && (
             <Badge className="bg-black text-white rounded-full">
               Book of Knowledge
             </Badge>
@@ -73,7 +117,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             <div className="relative rounded-lg overflow-hidden">
               <Image
                 src={
-                  location.mainImage ||
+                  `/images${location.mainImage}` ||
                   "/placeholder.svg?height=400&width=600&query=landscape"
                 }
                 alt={location.name}
@@ -84,11 +128,11 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            {location.galleryImages.slice(0, 4).map((image, index) => (
+            {location.galleryImages?.slice(0, 4).map((image, index) => (
               <div key={index} className="relative rounded-lg overflow-hidden">
                 <Image
                   src={
-                    image ||
+                    `/images${image}` ||
                     `/placeholder.svg?height=200&width=200&query=landscape${index}`
                   }
                   alt={`${location.name} gallery image ${index + 1}`}
@@ -145,10 +189,10 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
 
             <div className="text-sm text-gray-700 mb-6">
               <p className="mb-4">
-                {location.longDescription.split("\n\n")[0]}
+                {location.longDescription?.split("\n\n")[0]}
               </p>
-              {location.longDescription.split("\n\n")[1] && (
-                <p>{location.longDescription.split("\n\n")[1]}</p>
+              {location.longDescription?.split("\n\n")[1] && (
+                <p>{location.longDescription?.split("\n\n")[1]}</p>
               )}
             </div>
 
@@ -237,16 +281,21 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             <span className="text-primary-500">{location.name}</span>
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="lg:col-span-2 relative h-64 bg-gray-100 rounded-lg overflow-hidden">
-              <Image
-                src="/map-placeholder.jpg"
-                alt="Map location"
-                fill
-                className="object-cover"
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-96 p-2">
+            <div className="lg:col-span-2 relative h-full bg-gray-100 rounded-lg overflow-hidden">
+              <MapEmbed
+                latitude={location.coordinates?.lat}
+                longitude={location.coordinates?.lng}
               />
+
               <div className="absolute bottom-4 right-4">
                 <Button
+                  onClick={() => {
+                    window.open(
+                      `https://www.google.com/maps/search/?api=1&query=${location.coordinates?.lat},${location.coordinates?.lng}`,
+                      "_blank"
+                    );
+                  }}
                   variant="outline"
                   size="sm"
                   className="bg-white text-black hover:bg-gray-100 flex items-center gap-1">
@@ -255,11 +304,12 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                 </Button>
               </div>
             </div>
-            <div className="relative h-64 bg-gray-100 rounded-lg overflow-hidden">
+            <div className=" p-2 relative h-full bg-gray-100 rounded-lg overflow-hidden">
               <Image
-                src="/sri-lanka-map.jpg"
+                src={`/maps/${location.district}.svg`}
                 alt="Sri Lanka map"
                 fill
+                style={{ objectFit: "contain" }}
                 className="object-cover"
               />
             </div>
@@ -286,9 +336,9 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             <div>
               <p className="text-sm">
                 Added by{" "}
-                <span className="font-medium">{location.addedBy.name}</span>
+                <span className="font-medium">{location.addedBy?.name}</span>
               </p>
-              <p className="text-xs text-gray-500">{location.addedBy.time}</p>
+              <p className="text-xs text-gray-500">{location.addedBy?.time}</p>
             </div>
           </div>
           <Button
@@ -306,9 +356,9 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             <span className="text-primary-500">{location.name}</span>
           </h2>
           <div className="text-sm text-gray-700">
-            <p className="mb-4">{location.specialNotes.split("\n\n")[0]}</p>
-            {location.specialNotes.split("\n\n")[1] && (
-              <p>{location.specialNotes.split("\n\n")[1]}</p>
+            <p className="mb-4">{location.specialNotes?.split("\n\n")[0]}</p>
+            {location.specialNotes?.split("\n\n")[1] && (
+              <p>{location.specialNotes?.split("\n\n")[1]}</p>
             )}
           </div>
         </div>
