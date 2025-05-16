@@ -68,7 +68,7 @@ export default function UploadModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogTitle>Upload Model</DialogTitle>
+      <DialogTitle hidden>Upload Model</DialogTitle>
       <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white">
         <div className="flex justify-end p-2">
           <button

@@ -8,12 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AuthLayout } from "../auth-layout";
 import Image from "next/image";
+import { useRouter } from "next/router";
 // import { signInAction } from "@/app/action/auth";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -42,6 +43,15 @@ export default function SignIn() {
       window.location.href = "/";
     }
   };
+
+  async function handleGoogleSignIn() {
+    const result = await signIn("google", { redirect: false });
+    if (result?.error) {
+      setError(result.error);
+    } else {
+      router.push("/");
+    }
+  }
 
   return (
     <AuthLayout>
@@ -120,7 +130,10 @@ export default function SignIn() {
             </span>
           </div>
         </div>
-        <Button variant="outline" className="w-full">
+        <Button
+          onClick={handleGoogleSignIn}
+          variant="outline"
+          className="w-full">
           <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
             <path
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
