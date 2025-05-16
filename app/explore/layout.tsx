@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Discover amazing places in Sri Lanka with Plex.lk",
 };
 
-export default function ExploreLayout({
+export default async function ExploreLayout({
   children,
 }: {
   children: React.ReactNode;
