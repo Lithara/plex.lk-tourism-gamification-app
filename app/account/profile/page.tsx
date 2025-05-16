@@ -7,11 +7,13 @@ import { CrossIcon, Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const session = useSession();
   const user = session.data?.user;
+  const [myPosts, setMyPosts] = useState([]);
+  const [savedPlaces, setSavedPlaces] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleUpload = (data: {
@@ -19,10 +21,60 @@ export default function ProfilePage() {
     caption: string;
     location: string;
   }) => {
-    console.log("Uploaded:", data);
+    try {
+      const formData = new FormData();
+      if (user?.id) {
+        formData.append("file", data.files[0]);
+        formData.append("description", data.caption);
+        formData.append("location", data.location);
+        formData.append("userId", user?.id);
+      } else {
+        return;
+      }
+
+      fetch("/api/feed-post", {
+        method: "POST",
+        body: formData,
+      });
+    } catch (error) {
+      console.error("Error uploading:", error);
+    }
     setIsModalOpen(false);
     // Here you would typically send the data to your backend
   };
+
+  const getTimeAgo = (inputDate) => {
+    const now = new Date();
+    const date = new Date(inputDate);
+    const timeDifference = now.getTime() - date.getTime(); // Difference in milliseconds
+
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const weeks = Math.floor(days / 7);
+
+    if (weeks > 0) {
+      return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
+    } else if (days > 0) {
+      return `${days} day${days > 1 ? "s" : ""} ago`;
+    } else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    } else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+    } else {
+      return "Just now";
+    }
+  };
+
+  useEffect(() => {
+    fetch("/api/feed-post?userId=" + user?.id)
+      .then((res) => res.json())
+      .then((data) => {
+        setMyPosts(data);
+        console.log(data);
+      });
+  }, [user?.id, isModalOpen]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -72,202 +124,89 @@ export default function ProfilePage() {
           <TabsContent value="posts" className="pt-6">
             <div className="space-y-6">
               {/* Post Item */}
-              <div className="border-b pb-6">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden mr-3">
+
+              {myPosts.map((post, index) => (
+                <div key={index} className="border-b pb-6">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden mr-3">
+                      <Image
+                        src={
+                          user?.image
+                            ? `/images${user?.image}`
+                            : "/placeholder.svg"
+                        }
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                        width={40}
+                        height={40}
+                      />
+                    </div>
+                    <div>
+                      <p className="font-medium">{user?.name}</p>
+                      <p className="text-xs text-gray-500">
+                        {getTimeAgo(post.createdAt)} • {post.location}, Sri
+                        Lanka
+                      </p>
+                    </div>
+                    <div className="ml-auto flex">
+                      <Button variant={"ghost"} className="p-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="1" />
+                          <circle cx="19" cy="12" r="1" />
+                          <circle cx="5" cy="12" r="1" />
+                        </svg>
+                      </Button>
+                      <Button variant={"ghost"} className="p-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round">
+                          <path d="M3 6h18" />
+                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                        </svg>
+                      </Button>
+                    </div>
+                  </div>
+
+                  <p className="mb-4">{post.description}</p>
+
+                  <div className="mb-4">
                     <Image
-                      src="/diverse-professional-profiles.png"
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                      width={40}
-                      height={40}
+                      src={post.image}
+                      alt="Beach"
+                      className="w-full h-64 object-cover rounded-lg"
+                      width={640}
+                      height={360}
                     />
                   </div>
-                  <div>
-                    <p className="font-medium">Wasath Theekshana</p>
-                    <p className="text-xs text-gray-500">
-                      22h • Hikkaduwa, Sri Lanka
-                    </p>
-                  </div>
-                  <div className="ml-auto flex">
-                    <button className="p-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="19" cy="12" r="1" />
-                        <circle cx="5" cy="12" r="1" />
-                      </svg>
+
+                  <div className="flex items-center">
+                    <button className="flex items-center">
+                      <Heart className="mr-1 h-5 w-5" />
+                      <span>{post.likesCount}</span>
                     </button>
-                    <button className="p-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                      </svg>
-                    </button>
+                    <div className="ml-auto text-xs text-amber-600 font-medium">
+                      +5 PLXS
+                    </div>
                   </div>
                 </div>
-
-                <p className="mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                </p>
-
-                <div className="mb-4">
-                  <Image
-                    src="/tropical-beach-paradise.png"
-                    alt="Beach"
-                    className="w-full h-64 object-cover rounded-lg"
-                    width={640}
-                    height={360}
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <button className="flex items-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-1">
-                      <path d="M7 10v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10" />
-                      <path d="M15 10 H9" />
-                      <path d="M12 15v6" />
-                    </svg>
-                    <span>100</span>
-                  </button>
-                  <button className="flex items-center">
-                    <Heart className="mr-1 h-5 w-5" />
-                    <span>5</span>
-                  </button>
-                  <div className="ml-auto text-xs text-amber-600 font-medium">
-                    +5 PLXS
-                  </div>
-                </div>
-              </div>
-
-              {/* Second Post Item */}
-              <div className="border-b pb-6">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden mr-3">
-                    <Image
-                      src="/diverse-professional-profiles.png"
-                      alt="Profile"
-                      className="w-full h-full object-cover"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <div>
-                    <p className="font-medium">Wasath Theekshana</p>
-                    <p className="text-xs text-gray-500">
-                      22h • Hikkaduwa, Sri Lanka
-                    </p>
-                  </div>
-                  <div className="ml-auto flex">
-                    <button className="p-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="19" cy="12" r="1" />
-                        <circle cx="5" cy="12" r="1" />
-                      </svg>
-                    </button>
-                    <button className="p-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round">
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-                <p className="mb-4">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                </p>
-
-                <div className="mb-4">
-                  <Image
-                    src="/golden-hour-shoreline.png"
-                    alt="Sunset Beach"
-                    className="w-full h-64 object-cover rounded-lg"
-                    width={640}
-                    height={360}
-                  />
-                </div>
-
-                <div className="flex items-center">
-                  <button className="flex items-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-1">
-                      <path d="M7 10v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V10" />
-                      <path d="M15 10 H9" />
-                      <path d="M12 15v6" />
-                    </svg>
-                    <span>100</span>
-                  </button>
-                  <button className="flex items-center">
-                    <Heart className="mr-1 h-5 w-5" />
-                    <span>5</span>
-                  </button>
-                  <div className="ml-auto text-xs text-amber-600 font-medium">
-                    +5 PLXS
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </TabsContent>
 
