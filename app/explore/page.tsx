@@ -29,6 +29,20 @@ export default function ExplorePage() {
     "Rainforests",
     "Villages",
     "Museums",
+    "Tea Estates",
+    "Urban Parks",
+    "Gardens",
+    "Temples",
+    "Mosques",
+    "Churches",
+    "Monasteries",
+    "Cemeteries",
+    "Parks",
+    "Zoos",
+    
+
+
+
   ];
 
   const session = useSession();
@@ -59,7 +73,7 @@ export default function ExplorePage() {
       if (data) {
         // Update the locations state to reflect the new favorite status
         setLocations((prevLocations) =>
-          prevLocations.map((location) =>
+          prevLoca tions.map((location) =>
             location.id === placeId
               ? { ...location, favorite: !location.favorite }
               : location
