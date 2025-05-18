@@ -76,6 +76,15 @@ export default function ProfilePage() {
       });
   }, [user?.id, isModalOpen]);
 
+  const getSavedPlaces = () => {
+    fetch(`/api/places/favorite/user/${user?.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSavedPlaces(data);
+        console.log(data);
+      });
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div className="md:col-span-2">
@@ -87,6 +96,7 @@ export default function ProfilePage() {
               My posts
             </TabsTrigger>
             <TabsTrigger
+              onClick={getSavedPlaces}
               value="saved"
               className="data-[state=active]:border-b-2 data-[state=active]:border-[#3AAEA9] data-[state=active]:text-black rounded-none bg-transparent">
               Saved
@@ -211,65 +221,74 @@ export default function ProfilePage() {
           </TabsContent>
 
           <TabsContent value="saved" className="pt-6">
-            <div className="border rounded-lg overflow-hidden">
-              <div className="p-4">
-                <div className="flex items-center mb-2">
-                  <div className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded mr-2">
-                    Most Popular
+            <div className="space-y-6">
+              {savedPlaces.map((place, index) => (
+                <div key={index} className="border rounded-lg overflow-hidden">
+                  <div className="p-4">
+                    <div className="flex items-center mb-2">
+                      {place.popular && (
+                        <div className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded mr-2">
+                          Most Popular
+                        </div>
+                      )}
+                      <Button variant={"ghost"} className="ml-auto">
+                        <Heart
+                          className="h-5 w-5 text-[#3AAEA9]"
+                          fill={place.favorite ? "#3AAEA9" : "none"}
+                        />
+                      </Button>
+                    </div>
+                    <Image
+                      src={`/images${place.mainImage}`}
+                      alt={place.name}
+                      className="w-full h-48 object-cover rounded-lg mb-4"
+                      width={320}
+                      height={640}
+                    />
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center text-xs text-amber-600">
+                        <span>{place.plexes} PLXES</span>
+                        <div className="w-1 h-1 bg-gray-300 rounded-full mx-2"></div>
+
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round">
+                          <path d="M3 11l18-5v12L3 14v-3z" />
+                          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
+                        </svg>
+
+                        <span className="ml-1">120 Flags</span>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold mb-1">{place.name}</h3>
+                    <p className="text-sm text-gray-500 mb-4">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="inline mr-1">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      {place.district}, Sri Lanka
+                    </p>
+                    <p className="text-sm text-gray-600">{place.description}</p>
                   </div>
-                  <button className="ml-auto">
-                    <Heart className="h-5 w-5 text-[#3AAEA9]" />
-                  </button>
                 </div>
-                <Image
-                  src="/mountain-railway.png"
-                  alt="Demodara Station"
-                  className="w-full h-48 object-cover rounded-lg mb-4"
-                />
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center text-xs text-amber-600">
-                    <span>4 PLXES</span>
-                    <div className="w-1 h-1 bg-gray-300 rounded-full mx-2"></div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round">
-                      <path d="M3 11l18-5v12L3 14v-3z" />
-                      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
-                    </svg>
-                    <span className="ml-1">120 Flags</span>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-1">Demodara Station</h3>
-                <p className="text-sm text-gray-500 mb-4">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="inline mr-1">
-                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  Ella, Sri Lanka
-                </p>
-                <p className="text-sm text-gray-600">
-                  Lorem ipsum dolor sit amet, conseetur adipiscing elit. Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis lig...
-                </p>
-              </div>
+              ))}
             </div>
           </TabsContent>
 
