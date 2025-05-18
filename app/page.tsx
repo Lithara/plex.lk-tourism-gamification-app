@@ -9,15 +9,18 @@ export default async function Home() {
       <section className="overflow-hidden  mx-auto  container px-4 pt-8 md:pt-12 lg:pt-16">
         <div className=" absolute bottom-[-10%] right-[0%] -z-10  h-[400px] w-[300px] -translate-x-[0%] translate-y-[20%] rounded-full bg-primary-500 opacity-40 blur-[100px] overflow-x-clip"></div>
         <div className="hidden sm:block absolute inset-0 -z-10 h-full w-[50%] bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div className="grid gap-8 lg:grid-cols-[70%_30%] lg:gap-12 items-center">
           <div className="space-y-4">
-            <h1 className="text-[64px] md:text-[96px] sm:text-6xl  sm:leading-[.9] leading-[1] font-bold tracking-tight">
-              <span className="flex items-center gap-2 ">
+            <h1 className="text-[64px] md:text-[120px] sm:text-6xl sm:leading-[.9] leading-[1] font-bold tracking-tight">
+              <span className="flex items-center gap-2 lg:mb-8">
                 Explore<span className="text-primary-500">,</span>{" "}
                 <Image src="/flag.png" alt="Logo" width={49} height={74} />
               </span>
-              Play <span className="text-primary-500">&</span> Share.
+              <span className="block">
+                Play <span className="text-primary-500">&</span> Share.
+              </span>
             </h1>
+
             <p className="text-lg text-muted-foreground max-w-[600px] pt-3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
               massa mi. Aliquam in hendrerit urna.
@@ -33,13 +36,13 @@ export default async function Home() {
               </Button>
             </div>
           </div>
-          <div className=" h-[450px] flex items-center sm:justify-end">
+          <div className="h-[550px] flex items-center sm:justify-end">
             <Image
               src="/heroimage.png"
-              width={400}
-              height={350}
+              width={500}
+              height={650}
               alt="Hero"
-              className="top-0 right-0 "
+              className="top-0 right-0"
             />
           </div>
         </div>
