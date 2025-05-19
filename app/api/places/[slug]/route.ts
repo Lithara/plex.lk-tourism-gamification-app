@@ -20,7 +20,9 @@ export async function GET(
         coordinates: true,
         addedBy: true,
         knowledgeContent: {
-          include: {},
+          include: {
+            sections: true,
+          },
         },
       },
       // add knowledge sections

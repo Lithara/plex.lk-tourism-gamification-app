@@ -20,7 +20,7 @@ export async function GET(request: Request) {
       plexes: true,
     },
     orderBy: {
-      createdAt: "desc",
+      createdAt: "asc",
     },
     where: {
       // Filter by search term if provided
