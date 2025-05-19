@@ -1,4 +1,4 @@
-import { Image } from "next/image";
+import { UserOrderByRelevanceFieldEnum } from "./../../../../node_modules/.prisma/client/index.d";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -22,16 +22,7 @@ export async function GET(
         addedBy: true,
         knowledgeContent: {
           include: {
-            sections: {
-              select: {
-                id: true,
-                text: true,
-                images: true,
-              },
-              orderBy: {
-                createdAt: "asc",
-              },
-            },
+            sections: true,
           },
         },
       },
