@@ -16,10 +16,12 @@ export default function NotFound() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button className="bg-teal-500 hover:bg-teal-600 text-white flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              Back to Home
-            </Button>
+            <Link href="/">
+              <Button className="bg-teal-500 hover:bg-teal-600 text-white flex items-center gap-2">
+                <Home className="h-4 w-4" />
+                Back to Home
+              </Button>
+            </Link>
             <Button variant="outline" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
               Search Locations
