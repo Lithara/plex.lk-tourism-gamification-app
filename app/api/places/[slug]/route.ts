@@ -29,12 +29,7 @@ export async function GET(
       // add knowledge sections
     });
 
-    //  knowledge content -> sections oder by createdAt ASEC
-    if (place?.knowledgeContent && place.knowledgeContent.sections) {
-      place.knowledgeContent.sections.sort(
-        (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-      );
-    }
+    //  knowledge content -> sections oder by createdAt DESC
 
     if (userId) {
       const favorite = await prisma.favorite.findFirst({
