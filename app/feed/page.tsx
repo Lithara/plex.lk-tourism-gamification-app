@@ -1,16 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import {
-  Search,
-  MapPin,
-  ThumbsUp,
-  MoreHorizontal,
-  X,
-  Filter,
-  Users,
-} from "lucide-react";
+
+import { Search, MapPin, ThumbsUp, MoreHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -116,6 +108,11 @@ export default function FeedPage() {
     }
   };
 
+  // delete post from array
+  const handleDeletePost = (postId: string) => {
+    setFeedPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+  };
+
   return (
     <div className="min-h-screen">
       {/* Search Bar */}
@@ -207,11 +204,11 @@ export default function FeedPage() {
 
       {/* Main Content */}
       <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-6">
-        <div className="space-y-6 mx-auto md:w-[700px] sm:w-[500px] w-[280px] lg:w-[800px]">
+        <div className=" mx-auto md:w-[700px] sm:w-[500px] sha w-[280px] lg:w-[800px]">
           {feedPosts.map((post) => (
             <div
               key={post.id}
-              className="bg-white rounded-lg shadow-sm overflow-hidden">
+              className="bg-white border border-b-gray-400 last:border-b-0 first:rounded-t-lg last:rounded-b-lg shadow-2xl  overflow-hidden">
               {/* Post Header */}
               <div className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -238,7 +235,11 @@ export default function FeedPage() {
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button
+                    onClick={() => handleDeletePost(post.id)}
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8">
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
@@ -246,7 +247,9 @@ export default function FeedPage() {
 
               {/* Post Content */}
               <div className="px-4 pb-3">
-                <p className="text-sm text-gray-700 mb-2">{post.description}</p>
+                <p className="text-sm  text-gray-700 mb-2">
+                  {post.description}
+                </p>
               </div>
 
               {/* Post Image */}
@@ -256,7 +259,7 @@ export default function FeedPage() {
                   alt="Post image"
                   width={800}
                   height={500}
-                  className="w-full object-cover"
+                  className="w-full object-cover m-5"
                 />
               </div>
 
