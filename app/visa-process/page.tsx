@@ -31,7 +31,9 @@ export default function VisaProcessing() {
               </p>
               <div className="flex gap-4">
                 <Link href="/visa-process/apply">
-                  <Button size="lg" className="bg-black hover:bg-black/90">
+                  <Button
+                    size="lg"
+                    className="bg-primary-500 rounded-full text-white hover:bg-black/90">
                     Start Applying
                   </Button>
                 </Link>

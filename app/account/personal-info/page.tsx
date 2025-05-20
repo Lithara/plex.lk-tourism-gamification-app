@@ -1,8 +1,29 @@
+"use client";
+
+import { NameChangeDialog } from "@/components/name-change-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertTriangle, User } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 export default function PersonalInfoPage() {
+  const session = useSession();
+
+  const [user, setUser] = useState();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleNameUpdated = (newName: string) => {
+    setUser((prev) => ({ ...prev, name: newName }));
+  };
+
+  useEffect(() => {
+    if (session.data) {
+      setUser(session.data.user);
+    }
+  }, [session.data]);
+
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Personal Info</h1>
@@ -12,9 +33,12 @@ export default function PersonalInfoPage() {
         <div className="flex justify-between items-start border-b pb-6">
           <div>
             <h2 className="text-xl font-semibold mb-1">Full Name</h2>
-            <p className="text-gray-700">Wasath Theekshana</p>
+            <p className="text-gray-700">{user?.name}</p>
           </div>
-          <Button variant="outline" className="text-[#3AAEA9]">
+          <Button
+            onClick={() => setIsDialogOpen(true)}
+            variant="outline"
+            className="text-[#3AAEA9]">
             Edit
           </Button>
         </div>
@@ -23,22 +47,22 @@ export default function PersonalInfoPage() {
         <div className="flex justify-between items-start border-b pb-6">
           <div>
             <h2 className="text-xl font-semibold mb-1">Email</h2>
-            <p className="text-gray-700">w****t@test.com</p>
+            <p className="text-gray-700">{user?.email}</p>
           </div>
-          <Button variant="outline" className="text-[#3AAEA9]">
+          {/* <Button variant="outline" className="text-[#3AAEA9]">
             Edit
-          </Button>
+          </Button> */}
         </div>
 
         {/* Phone Number Section */}
         <div className="flex justify-between items-start border-b pb-6">
           <div>
             <h2 className="text-xl font-semibold mb-1">Phone Number</h2>
-            <p className="text-gray-700">07**********</p>
+            <p className="text-gray-700">+94 77 123 4567</p>
           </div>
-          <Button variant="outline" className="text-[#3AAEA9]">
+          {/* <Button variant="outline" className="text-[#3AAEA9]">
             Edit
-          </Button>
+          </Button> */}
         </div>
 
         {/* Country Section */}
@@ -47,20 +71,20 @@ export default function PersonalInfoPage() {
             <h2 className="text-xl font-semibold mb-1">Country</h2>
             <p className="text-gray-700">Sri Lanka</p>
           </div>
-          <Button variant="outline" className="text-[#3AAEA9]">
+          {/* <Button variant="outline" className="text-[#3AAEA9]">
             Edit
-          </Button>
+          </Button> */}
         </div>
 
         {/* Emergency Contact Section */}
         <div className="flex justify-between items-start border-b pb-6">
           <div>
             <h2 className="text-xl font-semibold mb-1">Emergency Contact</h2>
-            <p className="text-gray-700">Add a contact</p>
+            <p className="text-gray-700">+94 77 123 4567</p>
           </div>
-          <Button variant="outline" className="text-[#3AAEA9]">
+          {/* <Button variant="outline" className="text-[#3AAEA9]">
             Edit
-          </Button>
+          </Button> */}
         </div>
 
         {/* Info Cards */}
@@ -104,6 +128,13 @@ export default function PersonalInfoPage() {
           </Card>
         </div>
       </div>
+
+      <NameChangeDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        currentName={user?.name}
+        onNameUpdated={handleNameUpdated}
+      />
     </div>
   );
 }

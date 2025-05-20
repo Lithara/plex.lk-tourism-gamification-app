@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 interface NavBarProps {
   variant?: "landing" | "app" | "visa";
@@ -34,7 +35,11 @@ const Navbar = ({
   console.log("navigation", navigation);
 
   // if navigation == "/visa-process" then set variant to visa
-  if (navigation === "/visa-process" || navigation === "/visa-process/apply") {
+  if (
+    navigation === "/visa-process" ||
+    navigation === "/visa-process/apply" ||
+    navigation === "/visa-process/contact-us"
+  ) {
     showVisa = true;
     variant = "visa";
   } else {
@@ -48,8 +53,10 @@ const Navbar = ({
 
   const user = session?.data?.user;
 
+  console.log("user", user);
+
   return (
-    <header className="static top-0 z-1000 w-full p-0 m-0 flex flex-col ">
+    <header className="static border-b-2 top-0 z-1000 w-full p-0 m-0 flex flex-col ">
       {/* upper bar */}
       <nav className="sm:h-8 h-14 w-full bg-primary-500 flex items-center mx-0 p-0 m-auto transition-transform duration-300 ">
         <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px]  h-6 w-full flex sm:gap-4 items-center justify-center flex-col sm:flex-row text-xs sm:text-sm font-bold text-white">
@@ -66,7 +73,7 @@ const Navbar = ({
 
       {/* navbar */}
       <nav
-        className="sm:h-16 h-14 w-full bg-white flex items-center m-auto transition-all duration-300 ${
+        className="sm:h-24 h-14 w-full bg-white flex items-center m-auto transition-all duration-300 ${
           ">
         <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px] h-full  w-full flex sm:gap-4 items-center justify-between  text-xs sm:text-sm font-bold">
           {/* left side */}
@@ -95,9 +102,9 @@ const Navbar = ({
 
           {/* middle  */}
 
-          <div className="hidden sm:flex items-center gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+          <div className="hidden sm:flex items-center gap-4 md:gap-6 font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
             {variant !== "visa" && (
-              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+              <nav className="hidden sm:flex  items-center sm:gap-6 md:gap-10 font-normal sm:text-[16px] text-[14px]  text-gray-500">
                 <Link
                   href="/explore"
                   className={cn(
@@ -132,7 +139,7 @@ const Navbar = ({
             )}
 
             {variant === "visa" && (
-              <nav className="hidden sm:flex  items-center sm:gap-4 md:gap-6/ font-normal sm:text-[16px] text-[14px] font-bold text-gray-500">
+              <nav className="hidden sm:flex  items-center sm:gap-8 md:gap-10 font-normal sm:text-[16px] text-[14px]  text-gray-500">
                 <Link
                   href="/visa-process/apply"
                   className={cn(
@@ -144,7 +151,7 @@ const Navbar = ({
                   Apply Now
                 </Link>
                 <Link
-                  href="/contact-us"
+                  href="/visa-process/contact-us"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
                     activeItem === "visa-process"
@@ -163,7 +170,8 @@ const Navbar = ({
               {variant !== "visa" && (
                 <div className="bg-yellow-50 p-2   w-auto flex items-center justify-center rounded-full text-amber-900 text-xs">
                   <p className="flex items-center gap-1">
-                    5 PLX <CircleAlert className="w-4 h-4"></CircleAlert>
+                    {user.plxCount} PLX{" "}
+                    <CircleAlert className="w-4 h-4"></CircleAlert>
                   </p>
                 </div>
               )}
@@ -171,9 +179,9 @@ const Navbar = ({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="p-1 border-2  border-gray-400 sm:border-none sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
-                    <UserRound
-                      className="bg-gray-400 rounded-full w-auto h-full"
-                      color="white"></UserRound>
+                    <Avatar>
+                      <AvatarImage src={user.image} alt={user.name} />
+                    </Avatar>
                   </div>
                 </DropdownMenuTrigger>
 

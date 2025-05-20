@@ -31,23 +31,30 @@ export async function GET(
 
     //  knowledge content -> sections oder by createdAt DESC
 
-    if (userId) {
-      const favorite = await prisma.favorite.findFirst({
-        where: {
-          placeId: place.id,
-          userId: userId,
-        },
-      });
+    const favorite = await prisma.favorite.findFirst({
+      where: {
+        placeId: place.id,
+        userId: userId,
+      },
+    });
 
-      if (favorite) {
-        console.log("Favorite found");
+    if (favorite) {
+      place.favorite = true;
+    } else {
+      place.favorite = false;
+    }
 
-        // push favorite status to place object
-        place.favorite = true;
-      } else {
-        // push favorite status to place object
-        place.favorite = false;
-      }
+    const flag = await prisma.placedFlag.findFirst({
+      where: {
+        placeId: place.id,
+        userId: userId,
+      },
+    });
+
+    if (flag) {
+      place.flagged = true;
+    } else {
+      place.flagged = false;
     }
 
     return NextResponse.json(place);

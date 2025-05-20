@@ -12,6 +12,7 @@ import MapEmbed from "@/components/MapEmbed";
 
 import { notFound } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { LocationDialog } from "@/components/location-dialog";
 
 export default function LocationPage({ params }: { params: { slug: string } }) {
   const { slug } = use(params);
@@ -23,6 +24,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
   const [location, setLocation] = useState({});
   const session = useSession();
   const userId = session?.data?.user?.id;
+  const [locationOpen, setLocationOpen] = useState(false);
 
   useEffect(() => {
     // Fetch location data from API
@@ -39,7 +41,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
       setLocation(data);
     };
     fetchLocationData();
-  }, [slug, userId]);
+  }, [slug, userId, locationOpen]);
 
   const toggleFavorite = async () => {
     if (!userId || !location) {
@@ -75,7 +77,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white md:mt-8 mt-4">
       {/* Main Content */}
       <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-6">
         {/* Location Title and Badges */}
@@ -119,17 +121,17 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Image Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 h-auto md:grid-cols-2 gap-4 mb-8">
+          <div className="md:col-span-1">
             <div className="relative rounded-lg overflow-hidden">
               <Image
                 src={
                   `/images${location.mainImage}` ||
                   "/placeholder.svg?height=400&width=600&query=landscape"
                 }
-                alt={location.name}
+                alt={location.name || "Location image"}
                 width={600}
-                height={400}
+                height={200}
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -143,8 +145,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                     `/placeholder.svg?height=200&width=200&query=landscape${index}`
                   }
                   alt={`${location.name} gallery image ${index + 1}`}
-                  width={200}
-                  height={200}
+                  fill
                   className="w-full h-full object-cover"
                 />
                 {index === 3 && (
@@ -161,7 +162,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
           <div className="lg:col-span-2">
             <h2 className="text-2xl font-bold mb-2">
-              {location.name}, {location.country}
+              {location.name}, Sri Lanka
             </h2>
 
             <div className="flex items-center gap-2 mb-4">
@@ -194,7 +195,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
               </span>
             </div>
 
-            <div className="text-sm text-gray-700 mb-6">
+            <div className="text-sm text-justify text-gray-700 mb-6">
               <p className="mb-4">
                 {location.longDescription?.split("\n\n")[0]}
               </p>
@@ -261,24 +262,29 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
                 } font-medium mb-2`}>
                 {location.difficulty}
               </h3>
-              <p className="text-sm text-gray-500">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                Maecenas vitae mattis tellus.
+              <p className="text-sm text-justify text-gray-500">
+                These locations are perfect for beginners, families, or anyone
+                looking for a laid-back adventure. Enjoy beautiful sights with
+                minimal physical effort, making them ideal for leisurely strolls
+                and casual exploration.
               </p>
             </div>
 
             {userId && (
               <div>
                 <div className="mb-4">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-center text-gray-500">
                     Location permission required
                   </p>
                 </div>
 
-                <Button className="w-full rounded-full bg-primary-500 hover:bg-primary-600 text-white">
-                  Place my flag
+                <Button
+                  disabled={location.flagged === true}
+                  onClick={() => setLocationOpen(true)}
+                  className="w-full rounded-full bg-primary-500 hover:bg-primary-600 text-white">
+                  {location.flagged === true
+                    ? "You have placed your flag"
+                    : "Place my flag"}
                 </Button>
               </div>
             )}
@@ -366,19 +372,21 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             Special notes before you exploring{" "}
             <span className="text-primary-500">{location.name}</span>
           </h2>
-          <div className="text-sm text-gray-700">
+          <div className="text-sm text-justify text-gray-700">
             <p className="mb-4">{location.specialNotes?.split("\n\n")[0]}</p>
             {location.specialNotes?.split("\n\n")[1] && (
-              <p>{location.specialNotes?.split("\n\n")[1]}</p>
+              <p className="text-justify">
+                {location.specialNotes?.split("\n\n")[1]}
+              </p>
             )}
           </div>
         </div>
 
         {/* Environmental Message */}
-        <div className="relative rounded-lg overflow-hidden mb-12 bg-green-50">
+        <div className="relative  rounded-lg overflow-hidden mb-12 bg-green-50">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col justify-center p-8">
-              <h2 className="text-2xl font-bold mb-2">
+            <div className="flex flex-col justify-center items-center p-14">
+              <h2 className="text-3xl font-bold  ">
                 Keep the <span className="text-primary-500">environment</span>{" "}
                 clean & help to protect the world.
               </h2>
@@ -400,6 +408,16 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
         isOpen={isKnowledgeModalOpen}
         onClose={() => setIsKnowledgeModalOpen(false)}
         location={location}
+      />
+
+      {/* Location Dialog */}
+      <LocationDialog
+        open={locationOpen}
+        setOpen={setLocationOpen}
+        location={{ lat: location.lat, lng: location.lng }}
+        slug={location.slug}
+        placeId={location.id}
+        userId={userId}
       />
     </div>
   );

@@ -11,5 +11,7 @@ export default async function ExploreLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex flex-col min-h-screen">{children}</div>;
+  return (
+    <div className="flex mx-auto w-full flex-col min-h-screen">{children}</div>
+  );
 }

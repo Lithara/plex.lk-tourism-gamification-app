@@ -5,10 +5,10 @@ import { ArrowUpRight } from "lucide-react";
 export default function Footer() {
   return (
     <footer className="bg-gray-100  w-full">
-      <div className="container   flex">
-        <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px] grid sm:gap-0 gap-2 w-full grid-cols-1 md:grid-cols-5 py-6  ">
+      <div className="container mx-auto flex w-full ">
+        <div className=" mx-[16px] sm:mx-[64px] md:mx-[120px] grid sm:flex justify-between w-full grid-cols-1 md:grid-cols-5 py-6  ">
           {/* Logo Section */}
-          <div className="sm:col-span-4 md:col-span-1 flex sm:justify-start justify-center sm:items-start  md:row-span-1">
+          <div className="sm:col-span-4 md:col-span-1  flex sm:justify-start justify-center sm:items-start  md:row-span-1">
             <Link
               href="/"
               className="inline-flex w-[180px] h-auto items-center ">
