@@ -12,11 +12,11 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
   return (
     <div className="fixed top-0 left-0 z-20 grid min-h-screen grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-full bg-white">
       <div
-        className="relative hidden md:block bg-cover bg-center"
+        className="relative hidden md:block bg-cover brightness-50 bg-center "
         style={{
           backgroundImage: "url('/plextrain.jpg')",
         }}>
-        <div className="absolute inset-0 bg-white/80" />
+        <div className="absolute inset-0 bg-[#F0FFFE]  opacity-75  " />
         <div className="absolute inset-0  p-10 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
             <div className="flex justify-center items-center  gap-2">
