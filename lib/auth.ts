@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           country: user.country,
           image: user.image,
-          plexes: user.plexes,
+          plxCount: user.plxCount,
           coverImage: user.coverImage,
         };
       },
@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.image = token.picture;
         session.user.country = token.country;
-        session.user.plexes = token.plexes;
+        session.user.plxCount = token.plxCount;
         session.user.coverImage = token.coverImage;
       }
 
@@ -98,7 +98,7 @@ export const authOptions: NextAuthOptions = {
         email: dbUser.email,
         picture: dbUser.image,
         country: dbUser.country,
-        plexes: dbUser.plexes,
+        plxCount: dbUser.plxCount,
         coverImage: dbUser.coverImage,
       };
     },

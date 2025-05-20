@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, MapPin } from "lucide-react";
-import type { LocationDetails } from "@/data/locations";
+import type { Location } from "@/data/locations";
 
 interface BookOfKnowledgeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  location: LocationDetails;
+  location: Location;
 }
 
 export function BookOfKnowledgeModal({

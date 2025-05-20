@@ -22,8 +22,8 @@ export default async function Home() {
             </h1>
 
             <p className="text-lg text-muted-foreground max-w-[600px] pt-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-              massa mi. Aliquam in hendrerit urna.
+              Play your way through Sri Lanka’s hidden gems. Explore thrilling
+              paths, earn plex points, and rise on the leaderboard.
             </p>
             <div className="flex gap-4">
               <Link href="/authentication/sign-up">
@@ -68,10 +68,9 @@ export default async function Home() {
               Promoting the local businesses.
             </h2>
             <p className="text-muted-foreground text-[18px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-              massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-              fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
-              vitae mattis tellus.
+              Support Sri Lanka’s vibrant communities by discovering local
+              shops, artisans, and eateries. Every Plex point you spend helps
+              uplift small businesses and preserve authentic experiences.
             </p>
             <Button variant="link" className="p-0 text-black underline">
               Learn more
@@ -98,10 +97,9 @@ export default async function Home() {
                 our history.
               </h3>
               <p className="text-muted-foreground text-[18px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                Maecenas vitae mattis tellus.
+                Journey through ancient kingdoms and timeless tales. Discover
+                sacred temples, colonial forts, and legendary landmarks. Each
+                stop reveals a chapter of Sri Lanka’s rich and vibrant past.
               </p>
             </div>
             <div className="flex  justify-end">
@@ -122,10 +120,9 @@ export default async function Home() {
                 Plex points.
               </h3>
               <p className="text-muted-foreground text-[18px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                Maecenas vitae mattis tellus.
+                Complete challenges, unlock achievements, and earn Plex points
+                as you travel. Redeem them for exclusive rewards, local deals,
+                and epic bragging rights on the leaderboard.
               </p>
             </div>
             <div className="flex  justify-start">
@@ -146,10 +143,9 @@ export default async function Home() {
                 valuable memories.
               </h3>
               <p className="text-muted-foreground text-[18px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-                massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                Maecenas vitae mattis tellus.
+                Capture your adventures, write your stories, and save your
+                favorite moments in one place. Share memories with fellow
+                explorers and inspire others to begin their journey.
               </p>
             </div>
             <div className="flex  justify-end">
@@ -245,8 +241,9 @@ export default async function Home() {
               adventure<span className="text-primary-500">?</span>
             </h2>
             <p className="text-[18px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-              massa mi. Aliquam in hendrerit urna.
+              Pack your curiosity and dive into a journey like no other.
+              Discover new places, earn Plex points, and turn every step into a
+              story worth remembering.
             </p>
             <Button
               size="lg"

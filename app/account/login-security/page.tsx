@@ -28,9 +28,9 @@ export default function LoginSecurityPage() {
               <h3 className="text-xl font-semibold mb-1">Google</h3>
               <p className="text-gray-500 text-sm">Connected</p>
             </div>
-            <Button variant="outline" className="text-[#3AAEA9]">
+            {/* <Button variant="outline" className="text-[#3AAEA9]">
               Disconnect
-            </Button>
+            </Button> */}
           </div>
         </div>
 

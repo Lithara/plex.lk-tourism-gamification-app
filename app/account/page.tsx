@@ -20,7 +20,7 @@ export default function AccountPage() {
         <Link href="/account/profile">
           <Card className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-start text-left">
                 <User className="h-8 w-8 mb-4" />
                 <h3 className="font-semibold mb-2">Profile</h3>
                 <p className="text-sm text-gray-500">
@@ -35,7 +35,7 @@ export default function AccountPage() {
         <Link href="/account/personal-info">
           <Card className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-start text-left">
                 <Info className="h-8 w-8 mb-4" />
                 <h3 className="font-semibold mb-2">Personal Info</h3>
                 <p className="text-sm text-gray-500">
@@ -50,7 +50,7 @@ export default function AccountPage() {
         <Link href="/account/login-security">
           <Card className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-start text-left">
                 <Shield className="h-8 w-8 mb-4" />
                 <h3 className="font-semibold mb-2">Login & security</h3>
                 <p className="text-sm text-gray-500">
@@ -65,7 +65,7 @@ export default function AccountPage() {
         <Link href="/account/privacy-sharing">
           <Card className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center">
+              <div className="flex flex-col items-start text-left">
                 <Eye className="h-8 w-8 mb-4" />
                 <h3 className="font-semibold mb-2">Privacy & sharing</h3>
                 <p className="text-sm text-gray-500">

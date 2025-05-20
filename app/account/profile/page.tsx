@@ -1,8 +1,10 @@
 "use client";
 
+import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import UploadModal from "@/components/upload-model";
+import { Avatar } from "@radix-ui/react-avatar";
 import { CrossIcon, Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -85,6 +87,29 @@ export default function ProfilePage() {
       });
   };
 
+  const handleDeletePost = async (postId: string) => {
+    const prevPosts = myPosts;
+    const updatedPosts = myPosts.filter((post) => post.id !== postId);
+    setMyPosts(updatedPosts); // Optimistic update
+
+    try {
+      const response = await fetch(
+        `/api/feed-post/${postId}?userId=${user?.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to delete post");
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      setMyPosts(prevPosts); // Revert on error
+      alert(error.message); // Show error to user
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div className="md:col-span-2">
@@ -139,17 +164,10 @@ export default function ProfilePage() {
                 <div key={index} className="border-b pb-6">
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden mr-3">
-                      <Image
-                        src={
-                          user?.image
-                            ? `/images${user?.image}`
-                            : "/placeholder.svg"
-                        }
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                        width={40}
-                        height={40}
-                      />
+                      <Avatar>
+                        <AvatarImage src={user?.image || ""} alt={user?.name} />
+                        <AvatarFallback>{user?.name}</AvatarFallback>
+                      </Avatar>
                     </div>
                     <div>
                       <p className="font-medium">{user?.name}</p>
@@ -175,7 +193,10 @@ export default function ProfilePage() {
                           <circle cx="5" cy="12" r="1" />
                         </svg>
                       </Button>
-                      <Button variant={"ghost"} className="p-1">
+                      <Button
+                        onClick={() => handleDeletePost(post.id)}
+                        variant={"ghost"}
+                        className="p-1">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -318,13 +339,10 @@ export default function ProfilePage() {
             />
             <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
               <div className="w-20 h-20 rounded-full border-4 border-white bg-gray-200 overflow-hidden">
-                <Image
-                  src={user?.image ? `/images${user?.image}` : "/user.png"}
-                  alt="Profile"
-                  className="w-full h-full object-cover"
-                  width={80}
-                  height={80}
-                />
+                <Avatar>
+                  <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
               </div>
             </div>
             <button className="absolute bottom-2 right-2 bg-white/20 backdrop-blur-sm p-2 rounded-full">

@@ -39,10 +39,6 @@ export default function ExplorePage() {
     "Cemeteries",
     "Parks",
     "Zoos",
-    
-
-
-
   ];
 
   const session = useSession();
@@ -73,7 +69,7 @@ export default function ExplorePage() {
       if (data) {
         // Update the locations state to reflect the new favorite status
         setLocations((prevLocations) =>
-          prevLoca tions.map((location) =>
+          prevLocations.map((location) =>
             location.id === placeId
               ? { ...location, favorite: !location.favorite }
               : location
@@ -146,7 +142,7 @@ export default function ExplorePage() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white ">
+      <div className="bg-white container justify-start flex mx-auto">
         <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-3">
           <div className="flex flex-wrap justify-between items-center gap-3">
             <div className="flex gap-2">
@@ -252,7 +248,7 @@ export default function ExplorePage() {
       </div>
 
       {/* Categories */}
-      <div className="bg-white">
+      <div className="bg-white  container mx-auto  ">
         <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-3">
           <div className="overflow-x-auto">
             <div className="flex space-x-4 pb-2">
@@ -282,86 +278,88 @@ export default function ExplorePage() {
       </div>
 
       {/* Main Content */}
-      <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {locations.map((location) => (
-            <Link
-              key={location.id}
-              href={`/explore/${location.slug}`}
-              className="block bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:scale-[1.02]">
-              <div>
-                <div className="relative">
-                  <Image
-                    src={`/images${location.mainImage}`}
-                    alt={location.name}
-                    width={300}
-                    height={200}
-                    className="w-full h-48 object-cover"
-                  />
-                  {userId && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className={` ${
-                        location.favorite ? "bg-primary-500" : "bg-white/50"
-                      } absolute top-2 right-2 h-8 w-8 rounded-full hover:bg-white`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        toggleFavorite(location.id);
-                      }}>
-                      <Heart className="h-4 w-4" />
-                      <span className="sr-only">Like</span>
-                    </Button>
-                  )}
-                  {location.popular === true && (
-                    <Badge className="absolute top-2 left-2 bg-orange-500 hover:bg-orange-600">
-                      Most Popular
-                    </Badge>
-                  )}
-                  {location.knowledge === true && (
-                    <Badge className="absolute bottom-2 left-2 bg-gray-800 hover:bg-gray-900 text-white">
-                      Book of Knowledge
-                    </Badge>
-                  )}
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-bold">{location.name}</h3>
-                      <p className="text-sm text-gray-500 flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        {location.location || `${location.name}, Sri Lanka`}
-                      </p>
+      <div className="bg-white container flex justify-center mx-auto w-full">
+        <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] py-6  ">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {locations.map((location) => (
+              <Link
+                key={location.id}
+                href={`/explore/${location.slug}`}
+                className="block bg-white rounded-lg shadow-sm overflow-hidden transition-transform hover:scale-[1.02]">
+                <div>
+                  <div className="relative">
+                    <Image
+                      src={`/images${location.mainImage}`}
+                      alt={location.name}
+                      width={300}
+                      height={200}
+                      className="w-full h-48 object-cover"
+                    />
+                    {userId && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={` ${
+                          location.favorite ? "bg-primary-500" : "bg-white/50"
+                        } absolute top-2 right-2 h-8 w-8 rounded-full hover:bg-white`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleFavorite(location.id);
+                        }}>
+                        <Heart className="h-4 w-4" />
+                        <span className="sr-only">Like</span>
+                      </Button>
+                    )}
+                    {location.popular === true && (
+                      <Badge className="absolute top-2 left-2 bg-orange-500 hover:bg-orange-600">
+                        Most Popular
+                      </Badge>
+                    )}
+                    {location.knowledge === true && (
+                      <Badge className="absolute bottom-2 left-2 bg-gray-800 hover:bg-gray-900 text-white">
+                        Book of Knowledge
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h3 className="font-bold">{location.name}</h3>
+                        <p className="text-sm text-gray-500 flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          {location.location || `${location.name}, Sri Lanka`}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-orange-500 font-bold">
+                          {location.plexes} PLXES
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-orange-500 font-bold">
-                        {location.plexes} PLXES
-                      </span>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {location.description.length > 120
+                        ? `${location.description.substring(0, 120)}...`
+                        : location.description}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-1">
+                        <Image
+                          src="/flag.png"
+                          width={12}
+                          height={12}
+                          alt="Flag"
+                        />
+                        <span className="text-xs text-gray-500">
+                          {location.flags} Flags
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <p className="text-xs text-gray-500 mb-2">
-                    {location.description.length > 120
-                      ? `${location.description.substring(0, 120)}...`
-                      : location.description}
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center gap-1">
-                      <Image
-                        src="/flag.png"
-                        width={12}
-                        height={12}
-                        alt="Flag"
-                      />
-                      <span className="text-xs text-gray-500">
-                        {location.flags} Flags
-                      </span>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

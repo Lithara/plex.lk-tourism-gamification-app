@@ -116,7 +116,7 @@ export default function FeedPage() {
   return (
     <div className="min-h-screen">
       {/* Search Bar */}
-      <div className="bg-white border-b">
+      <div className="bg-white border-b mt-4">
         <div className="mx-[16px] sm:mx-[64px] md:mx-[120px] pb-6">
           <div className="relative max-w-xl mx-auto">
             <Input
@@ -253,7 +253,7 @@ export default function FeedPage() {
               </div>
 
               {/* Post Image */}
-              <div className="w-full">
+              <div className="w-full flex mx-auto">
                 <Image
                   src={post.image || "/placeholder.svg"}
                   alt="Post image"
