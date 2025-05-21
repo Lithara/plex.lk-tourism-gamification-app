@@ -78,9 +78,10 @@ export function LocationDialog({
         ...Session,
         user: {
           ...Session?.user,
-          plxCount: Session?.user?.plxCount
-            ? Session?.user?.plxCount + plexes
-            : plexes,
+          plxCount:
+            Session?.user?.plxCount === null
+              ? plexes
+              : Session?.user?.plxCount + plexes,
         },
       });
 
