@@ -99,9 +99,9 @@ export default function LeaderboardPage() {
   ];
 
   return (
-    <div className="min-h-screen   bg-white">
+    <div className="min-h-screen flex justify-center bg-white">
       {/* Main Content */}
-      <div className="max-w-[1400px]  px-4 py-8  mx-[16px] sm:mx-[64px] md:mx-[120px]">
+      <div className="max-w-[1400px]  px-4 py-8  mx-[16px] sm:mx-[64px] md:mx-[120px]  container">
         {/* Top 3 Users */}
         <div className="flex flex-col md:flex-row justify-center items-end gap-4 md:gap-8  my-16">
           {/* 2nd Place */}
