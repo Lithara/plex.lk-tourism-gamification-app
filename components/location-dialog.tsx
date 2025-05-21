@@ -49,7 +49,7 @@ export function LocationDialog({
         if (isNearby(getGeoLocation, { latitude: lat, longitude: lng })) {
           setCanFlag(true);
         } else {
-          if (slug === "sigiriya") {
+          if (slug === "nsbm") {
             setCanFlag(true);
           } else {
             setCanFlag(false);
