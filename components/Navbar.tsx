@@ -180,7 +180,7 @@ const Navbar = ({
                 <DropdownMenuTrigger asChild>
                   <div className="p-1 border-2  border-gray-400 sm:border-none sm:h-12 h-10 rounded-full flex gap-2 justify-between items-center">
                     <Avatar>
-                      <AvatarImage src={user.image || ""} alt={user.name} />
+                      <AvatarImage src={user.image} alt={user.name || ""} />
                     </Avatar>
                   </div>
                 </DropdownMenuTrigger>
