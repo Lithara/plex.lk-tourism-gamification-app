@@ -165,7 +165,11 @@ export default function ProfilePage() {
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden mr-3">
                       <Avatar>
-                        <AvatarImage src={user?.image || ""} alt={user?.name} />
+                        <AvatarImage
+                          src={user?.image}
+                          referrerPolicy="no-referrer"
+                          alt={user?.name}
+                        />
                         <AvatarFallback>{user?.name}</AvatarFallback>
                       </Avatar>
                     </div>
@@ -340,7 +344,11 @@ export default function ProfilePage() {
             <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
               <div className="w-20 h-20 rounded-full border-4 border-white bg-gray-200 overflow-hidden">
                 <Avatar>
-                  <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+                  <AvatarImage
+                    src={user?.image}
+                    referrerPolicy="no-referrer"
+                    alt={user?.name || ""}
+                  />
                   <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
               </div>

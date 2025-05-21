@@ -305,7 +305,8 @@ export default function LeaderboardPage() {
                   <div className="w-10 h-10 rounded-full overflow-hidden">
                     <Avatar className="h-10 w-10">
                       <AvatarImage
-                        src={meAsUser?.image || "/placeholder.svg"}
+                        src={meAsUser?.image}
+                        referrerPolicy="no-referrer"
                         alt={meAsUser?.name || "User"}
                       />
                     </Avatar>
