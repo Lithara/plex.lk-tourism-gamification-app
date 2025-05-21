@@ -45,7 +45,7 @@ export async function POST(request: Request) {
       const updateData =
         user.plxCount !== null
           ? { plxCount: { increment: place.plexes } } // Increment if not null
-          : { plxCount: 1 }; // Set to 1 if null
+          : { plxCount: place.plexes }; // Set to 1 if null
 
       await prisma.user.update({
         where: { id: userId },
