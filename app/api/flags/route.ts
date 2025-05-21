@@ -36,7 +36,11 @@ export async function POST(request: Request) {
 
       await prisma.user.update({
         where: { id: userId },
-        data: { plxCount: { increment: place.plexes } },
+        data: {
+          plxCount: userId.plxCount
+            ? { increment: place.plexes }
+            : place.plexes,
+        },
       });
     }
     return NextResponse.json(
