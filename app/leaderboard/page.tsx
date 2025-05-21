@@ -318,7 +318,7 @@ export default function LeaderboardPage() {
                 <div className="flex items-center">
                   <span className="text-xs mr-1">Last Checkpoint</span>
                   <MapPin className="h-3 w-3 text-primary-500 mr-1" />
-                  "Sigiriya, Sri Lanka"
+                  Sigiriya, Sri Lanka
                 </div>
               </div>
 
