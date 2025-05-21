@@ -34,13 +34,22 @@ export async function POST(request: Request) {
         data: { flags: { increment: 1 } },
       });
 
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { plxCount: true },
+      });
+
+      if (!user) {
+        return NextResponse.json({ error: "User not found" }, { status: 404 });
+      }
+      const updateData =
+        user.plxCount !== null
+          ? { plxCount: { increment: place.plexes } } // Increment if not null
+          : { plxCount: 1 }; // Set to 1 if null
+
       await prisma.user.update({
         where: { id: userId },
-        data: {
-          plxCount: userId.plxCount
-            ? { increment: place.plexes }
-            : place.plexes,
-        },
+        data: updateData,
       });
     }
     return NextResponse.json(
