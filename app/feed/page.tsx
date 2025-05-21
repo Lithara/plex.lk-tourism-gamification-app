@@ -214,7 +214,8 @@ export default function FeedPage() {
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
                     <AvatarImage
-                      src={post.user.image || "/placeholder.svg"}
+                      src={post.user.image}
+                      referrerPolicy="no-referrer"
                       alt={post.user.name}
                     />
                     <AvatarFallback>{post.user.name[0]}</AvatarFallback>
