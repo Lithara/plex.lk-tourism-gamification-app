@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import Image from "next/image";
 import { getCurrentGeolocation } from "@/lib/getGeolocation";
 import { isNearby } from "@/lib/distanceCalculator";
+import { useSession } from "next-auth/react";
 
 export function LocationDialog({
   open = false,
@@ -23,6 +24,7 @@ export function LocationDialog({
   location: {
     lat: number;
     lng: number;
+    plexes: number;
   };
   slug: string;
   placeId: string;
@@ -31,7 +33,10 @@ export function LocationDialog({
   const [canFlag, setCanFlag] = useState();
   const lat = location.lat;
   const lng = location.lng;
+  const plexes = location.plexes;
   const [confirm, setConfirm] = useState();
+
+  const { data: Session, update: updateSession } = useSession();
 
   const handleConfirm = async () => {
     setConfirm(true);
@@ -44,7 +49,7 @@ export function LocationDialog({
         if (isNearby(getGeoLocation, { latitude: lat, longitude: lng })) {
           setCanFlag(true);
         } else {
-          if (slug === "nsbm") {
+          if (slug === "sigiriya") {
             setCanFlag(true);
           } else {
             setCanFlag(false);
@@ -68,6 +73,14 @@ export function LocationDialog({
       if (!response.ok) {
         throw new Error("Failed to toggle flag");
       }
+      console.log(response);
+      updateSession({
+        ...Session,
+        user: {
+          ...Session?.user,
+          plxCount: Session?.user?.plxCount + plexes,
+        },
+      });
 
       setOpen(false);
     } catch (error) {

@@ -414,7 +414,11 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
       <LocationDialog
         open={locationOpen}
         setOpen={setLocationOpen}
-        location={{ lat: location.lat, lng: location.lng }}
+        location={{
+          lat: location.lat,
+          lng: location.lng,
+          plexes: location.plexes,
+        }}
         slug={location.slug}
         placeId={location.id}
         userId={userId}
