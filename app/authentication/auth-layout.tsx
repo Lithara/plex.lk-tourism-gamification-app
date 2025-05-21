@@ -30,8 +30,8 @@ export function AuthLayout({ children, className }: AuthLayoutProps) {
               />
             </div>
             <p className="mt-2 text-lg font-semibold text-primary-500 w-96 text-center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et
-              massa mi. ingilla,
+              Join Plex.lk to explore Sri Lanka, earn points, and share your
+              journey.
             </p>
           </div>
         </div>
